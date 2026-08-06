@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services | VoyageRise Travel Agency & Holiday Packages</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
+    <meta name="description"
+        content="Explore VoyageRise Travel Agency services: Curated Tour Packages, Custom Itinerary Builder, Installment Payment Tracking, and Travel Document Vault.">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    
+    <style>
+        /* Services Hero custom CSS */
+        .services-hero {
+            position: relative;
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at 10% 30%, rgba(255, 107, 53, 0.06) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 70%, rgba(255, 138, 61, 0.06) 0%, transparent 40%);
+            overflow: hidden;
+        }
+        .services-hero-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 138, 61, 0.08) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .services-tab-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 14px 20px;
+            border-radius: 12px;
+            text-align: left;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        body.light-theme .services-tab-btn {
+            background: rgba(255, 255, 255, 0.4);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: #1a202c;
+        }
+        .services-tab-btn:hover, .services-tab-btn.active {
+            background: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(255, 138, 61, 0.15));
+            border-color: var(--primary-accent);
+            transform: translateX(5px);
+        }
+        .services-tab-btn.active .tab-icon-circle {
+            background: var(--primary-accent);
+            color: #fff;
+        }
+        .tab-icon-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            color: var(--primary-accent);
+        }
+        /* SVG drawing animation */
+        .svg-draw-path {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: drawLine 3s ease forwards infinite;
+        }
+        @keyframes drawLine {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Tab content layout */
+        .services-showcase-img {
+            height: 380px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .showcase-stat-pill {
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        body.light-theme .showcase-stat-pill {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #1a202c;
+        }
+
+        /* Entrance Animations */
+        .srv-entrance-left {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: srvReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .srv-entrance-right {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: srvRevealScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        @keyframes srvReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes srvRevealScale {
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" class="me-2" style="height: 32px; width: 32px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-2"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home2.html">Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Tour Packages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Travel Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="dashboard.html" class="btn btn-outline-custom btn-sm d-flex align-items-center"
+                        title="Client Portal Dashboard">
+                        <i class="bi bi-grid-fill"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                            RTL
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn btn-primary-custom btn-sm d-flex align-items-center" title="Login">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Services Header (Service Hub Layout) -->
+    <header class="services-hero position-relative">
+        <div class="services-hero-glow" style="top: 20%; left: 10%;"></div>
+        <div class="services-hero-glow" style="bottom: 15%; right: 5%;"></div>
+        
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-6 srv-entrance-left">
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <!-- Animated SVG icon -->
+                        <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="64" height="64" rx="16" fill="var(--primary-accent)" fill-opacity="0.1"/>
+                            <path class="svg-draw-path" d="M32 12V52M12 32H52M22 22L42 42M22 42L42 22" stroke="var(--primary-accent)" stroke-width="3" stroke-linecap="round"/>
+                        </svg>
+                        <div>
+                            <span class="badge bg-secondary-bg border border-color text-primary-accent px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider">Our Solutions</span>
+                            <h1 class="h6 text-white mb-0 mt-1">VoyageRise Ecosystem</h1>
+                        </div>
+                    </div>
+                    
+                    <h2 class="display-5 fw-bold text-white mb-4">
+                        Tailored Solutions For <span class="text-gradient">Every Traveler</span>
+                    </h2>
+                    
+                    <p class="text-secondary mb-4 pe-lg-4">
+                        Select a core planning service below to explore features, timelines, and dashboard integrations built for modern vacations.
+                    </p>
+                    
+                    <!-- Interactive Tab Selectors -->
+                    <div class="d-flex flex-column gap-3">
+                        <div class="services-tab-btn active" data-tab="0">
+                            <div class="tab-icon-circle"><i class="bi bi-compass-fill"></i></div>
+                            <div>
+                                <h5 class="mb-0 text-sm fw-bold">Curated Tour Packages</h5>
+                                <small class="text-secondary text-xs">50+ Pre-vetted itineraries</small>
+                            </div>
+                        </div>
+                        
+                        <div class="services-tab-btn" data-tab="1">
+                            <div class="tab-icon-circle"><i class="bi bi-bezier2"></i></div>
+                            <div>
+                                <h5 class="mb-0 text-sm fw-bold">Digital Client Portal</h5>
+                                <small class="text-secondary text-xs">Interactive document and payment hub</small>
+                            </div>
+                        </div>
+                        
+                        <div class="services-tab-btn" data-tab="2">
+                            <div class="tab-icon-circle"><i class="bi bi-headset"></i></div>
+                            <div>
+                                <h5 class="mb-0 text-sm fw-bold">24/7 Professional Concierge</h5>
+                                <small class="text-secondary text-xs">Dedicated support team</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right details: Dynamic Showcase Image -->
+                <div class="col-lg-6 srv-entrance-right">
+                    <div class="position-relative">
+                        <div class="glass-card p-2 position-relative">
+                            <img id="showcase-img" src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800" 
+                                 class="services-showcase-img rounded-4 shadow-lg img-fluid" alt="Curated holiday package destination">
+                            
+                            <!-- Floating Stat Badge -->
+                            <div class="showcase-stat-pill d-flex align-items-center gap-2">
+                                <span class="badge rounded-circle bg-primary-accent d-flex align-items-center justify-content-center p-2" style="width: 24px; height: 24px;">
+                                    <i class="bi bi-star-fill text-white text-xs"></i>
+                                </span>
+                                <span class="fw-bold" id="showcase-stat">50+ Global Tours</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 p-4 glass-card border border-color rounded-4">
+                            <h4 class="h5 text-white mb-2" id="showcase-title">Curated Holiday Packages</h4>
+                            <p class="text-secondary text-sm mb-0" id="showcase-desc">Choose from 50+ pre-arranged travel templates complete with 5-star lodging options, custom durations, and pre-vetted local guides.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Service Sections -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Section 1: Curated Tour Packages -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 h-100 text-center d-flex flex-column align-items-center">
+                        <div class="bg-primary-bg p-4 rounded-circle mb-4 border border-color" style="width: fit-content;">
+                            <i class="bi bi-compass text-primary-accent display-5"></i>
+                        </div>
+                        <h2 class="h3 mb-3">Curated Tour Packages</h2>
+                        <p class="text-secondary mb-0 max-w-600">Choose from handpicked domestic and international holiday packages with predefined itineraries, accommodation tiers, and optimal durations.</p>
+                    </div>
+                </div>
+
+                <!-- Section 2: Custom Itinerary Builder -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 h-100 text-center d-flex flex-column align-items-center">
+                        <div class="bg-primary-bg p-4 rounded-circle mb-4 border border-color" style="width: fit-content;">
+                            <i class="bi bi-bezier2 text-primary-accent display-5"></i>
+                        </div>
+                        <h2 class="h3 mb-3">Custom Itinerary Builder</h2>
+                        <p class="text-secondary mb-0 max-w-600">Customize daily activities, select preferred lodging levels, and modify tour routes online through our interactive client portal.</p>
+                    </div>
+                </div>
+
+                <!-- Section 3: Flexible Payment Installments -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 h-100 text-center d-flex flex-column align-items-center">
+                        <div class="bg-primary-bg p-4 rounded-circle mb-4 border border-color" style="width: fit-content;">
+                            <i class="bi bi-wallet2 text-primary-accent display-5"></i>
+                        </div>
+                        <h2 class="h3 mb-3">Flexible Payment Installments</h2>
+                        <p class="text-secondary mb-0 max-w-600">Split your holiday package expenses into manageable milestones. Track due payments and download invoices directly from your dashboard.</p>
+                    </div>
+                </div>
+
+                <!-- Section 4: Travel Document Vault -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 h-100 text-center d-flex flex-column align-items-center">
+                        <div class="bg-primary-bg p-4 rounded-circle mb-4 border border-color" style="width: fit-content;">
+                            <i class="bi bi-file-earmark-lock-fill text-primary-accent display-5"></i>
+                        </div>
+                        <h2 class="h3 mb-3">Travel Document Vault</h2>
+                        <p class="text-secondary mb-0 max-w-600">Upload passport scans, visa requests, and travel insurance files securely to our portal for prompt verification and safe keeping during your trip.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Simple Sections -->
+    <!-- Section 5: Custom Hotel & Resort Lodging -->
+    <section class="py-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <i class="bi bi-building-fill-check text-primary-accent fs-1 mb-4 d-block"></i>
+                    <h3 class="display-6 fw-bold mb-4">Custom Hotel & Resort Lodging</h3>
+                    <p class="text-secondary lead">We partner with top-rated hotels, boutique resorts, and eco-lodges worldwide. From comfortable 3-star standard lodging to 5-star luxury escapes, we book options that fit your budget and comfort preferences perfectly.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4" alt="Premium resort lodging">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Direct Flight & Airport Transfers -->
+    <section class="py-5 bg-secondary-bg">
+        <div class="container py-5">
+            <div class="row align-items-center g-5 flex-lg-row-reverse">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <i class="bi bi-airplane-fill text-primary-accent fs-1 mb-4 d-block"></i>
+                    <h3 class="display-6 fw-bold mb-4">Direct Flight & Airport Transfers</h3>
+                    <p class="text-secondary lead">Our travel logistics cover coordinated flight bookings and airport transfers. Enjoy hassle-free VIP lounge access options and airport drop-offs to ensure a relaxed departure and arrival.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4" alt="Flight and transit planning">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: 24/7 Professional On-Trip Support -->
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <i class="bi bi-headset text-primary-accent fs-1 mb-4 d-block"></i>
+                    <h3 class="display-6 fw-bold mb-4">24/7 Professional On-Trip Support</h3>
+                    <p class="text-secondary lead">Travel with complete peace of mind. Our dedicated local coordinators and emergency concierge lines are available 24/7 during your trip to assist with flight changes, local guidance, or emergencies.</p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4" alt="Travel coordinator support team">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrated Ecosystem Section -->
+    <section class="py-5 bg-secondary-bg">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="display-5 mb-4">Smart Booking <br> <span class="text-gradient">Ecosystem</span></h2>
+                    <p class="text-secondary mb-5">Our services aren't just standalone utilities; they are part of a unified digital ecosystem designed to turn every booking milestone into a stress-free travel experience.</p>
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="bi bi-phone-fill text-primary-accent fs-3"></i>
+                                <span class="fw-bold">Portal Verified</span>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center gap-3">
+                                <i class="bi bi-map-fill text-primary-accent fs-3"></i>
+                                <span class="fw-bold">Itinerary Live</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4 shadow-lg" alt="Smart travel dashboard interface">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="navbar-brand d-flex align-items-center mb-4" href="index.html">
+                        <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2">
+                        <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+                    </a>
+                    <p class="text-secondary">A premium travel agency providing curated domestic and international packages with a state-of-the-art client portal for managing itineraries, bookings, and travel documents.</p>
+                    <div class="d-flex gap-3 fs-4 mt-4 social-links">
+                        <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Destinations</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Domestic Escapes</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">International Tours</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Main Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-decoration-none text-secondary">Services</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Tour Packages</a></li>
+                        <li class="mb-2"><a href="pricing.html" class="text-decoration-none text-secondary">Pricing</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-secondary">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <div class="glass-card p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white shadow-none"
+                            placeholder="Email Address">
+                        <button class="btn btn-primary-custom ms-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-5 text-secondary border-top border-color">
+                <p>&copy; 2026 VoyageRise Travel Agency. All Rights Reserved. Explore the World.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabsData = [
+                {
+                    title: "Curated Holiday Packages",
+                    desc: "Choose from 50+ pre-arranged travel templates complete with 5-star lodging options, custom durations, and pre-vetted local guides.",
+                    img: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=800",
+                    stat: "50+ Global Tours"
+                },
+                {
+                    title: "Digital Client Portal",
+                    desc: "Manage your documents, track milestones, and view interactive day-by-day itineraries live in our custom portal.",
+                    img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800",
+                    stat: "100% Secured"
+                },
+                {
+                    title: "24/7 Professional Concierge",
+                    desc: "Travel with complete peace of mind. Our local concierges and dedicated call centers are standing by 24/7 to assist with emergencies.",
+                    img: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&q=80&w=800",
+                    stat: "24/7 Live Agent Support"
+                }
+            ];
+            
+            const tabBtns = document.querySelectorAll('.services-tab-btn');
+            const showcaseImg = document.getElementById('showcase-img');
+            const showcaseTitle = document.getElementById('showcase-title');
+            const showcaseDesc = document.getElementById('showcase-desc');
+            const showcaseStat = document.getElementById('showcase-stat');
+            
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const index = parseInt(btn.getAttribute('data-tab'));
+                    const data = tabsData[index];
+                    
+                    // Fade out
+                    showcaseImg.style.opacity = 0;
+                    showcaseImg.style.transform = 'scale(0.95)';
+                    
+                    setTimeout(() => {
+                        showcaseImg.src = data.img;
+                        showcaseTitle.textContent = data.title;
+                        showcaseDesc.textContent = data.desc;
+                        showcaseStat.textContent = data.stat;
+                        
+                        // Fade in
+                        showcaseImg.style.opacity = 1;
+                        showcaseImg.style.transform = 'scale(1)';
+                    }, 250);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

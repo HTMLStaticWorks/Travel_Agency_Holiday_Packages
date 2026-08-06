@@ -1,0 +1,24 @@
+<svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Outer ring of the compass -->
+    <circle cx="25" cy="25" r="21" stroke="url(#coral-grad)" stroke-width="3" fill="none"/>
+    
+    <!-- Outer ring dash marks -->
+    <line x1="25" y1="4" x2="25" y2="8" stroke="url(#coral-grad)" stroke-width="2.5"/>
+    <line x1="25" y1="42" x2="25" y2="46" stroke="url(#coral-grad)" stroke-width="2.5"/>
+    <line x1="4" y1="25" x2="8" y2="25" stroke="url(#coral-grad)" stroke-width="2.5"/>
+    <line x1="42" y1="25" x2="46" y2="25" stroke="url(#coral-grad)" stroke-width="2.5"/>
+    
+    <!-- Central rising sun / mountain peaks -->
+    <path d="M12 34 L 25 16 L 38 34 Z" fill="url(#coral-grad)" opacity="0.85"/>
+    <path d="M18 34 L 25 24 L 32 34 Z" fill="#FFFFFF" opacity="0.4"/>
+    
+    <!-- Compass North Arrow -->
+    <path d="M25 5 L 29 15 L 25 12 L 21 15 Z" fill="#FF5A5F"/>
+    
+    <defs>
+        <linearGradient id="coral-grad" x1="25" y1="5" x2="25" y2="45" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#FF5A5F"/>
+            <stop offset="1" stop-color="#FF7A00"/>
+        </linearGradient>
+    </defs>
+</svg>

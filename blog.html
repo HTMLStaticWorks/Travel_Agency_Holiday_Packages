@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Blog | VoyageRise Travel Agency</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <style>
+        .blog-card-img {
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+        @media (min-width: 576px) {
+            .w-sm-auto {
+                width: auto !important;
+            }
+        }
+
+        /* Magazine Hero Custom styles */
+        .blog-hero {
+            position: relative;
+            padding: 120px 0 80px;
+            background: radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(255, 138, 61, 0.05) 0%, transparent 40%);
+            overflow: hidden;
+        }
+        .blog-hero-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 138, 61, 0.07) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Interactive tags */
+        .category-pill-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b8c0d4;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        body.light-theme .category-pill-btn {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.05);
+            color: #4a5568;
+        }
+        .category-pill-btn:hover, .category-pill-btn.active,
+        body.light-theme .category-pill-btn:hover, body.light-theme .category-pill-btn.active {
+            background: var(--primary-accent) !important;
+            color: #fff !important;
+            border-color: var(--primary-accent) !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+
+        /* Magazine Cover Card */
+        .magazine-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            cursor: pointer;
+            height: 440px;
+        }
+        .magazine-card:hover {
+            transform: translateY(-8px) rotateX(2deg) rotateY(-2deg);
+            box-shadow: 0 30px 60px rgba(255, 107, 53, 0.15);
+        }
+        .magazine-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .magazine-card:hover .magazine-img {
+            transform: scale(1.05);
+        }
+        .magazine-overlay {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 40px 30px 30px;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95) 0%, rgba(15, 23, 42, 0.6) 50%, transparent 100%);
+            z-index: 10;
+        }
+        body.light-theme .magazine-overlay {
+            background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.65) 60%, transparent 100%);
+        }
+
+        /* Entrance Animation */
+        .blog-entrance-left {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: blgReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .blog-entrance-right {
+            opacity: 0;
+            transform: scale(0.97);
+            animation: blgRevealScale 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.15s;
+        }
+        @keyframes blgReveal {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes blgRevealScale {
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body class="bg-primary-bg">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" class="me-2" style="height: 32px; width: 32px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-2"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home2.html">Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Tour Packages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="blog.html">Travel Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="dashboard.html" class="btn btn-outline-custom btn-sm d-flex align-items-center"
+                        title="Client Portal Dashboard">
+                        <i class="bi bi-grid-fill"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                            RTL
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn btn-primary-custom btn-sm d-flex align-items-center" title="Login">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero (Magazine Layout) -->
+    <header class="blog-hero position-relative">
+        <div class="blog-hero-glow" style="top: 15%; left: 15%;"></div>
+        <div class="blog-hero-glow" style="bottom: 10%; right: 10%;"></div>
+        
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-5 blog-entrance-left">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="rounded-circle bg-primary-bg p-2 border border-color d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                            <i class="bi bi-journal-bookmark-fill text-primary-accent"></i>
+                        </div>
+                        <span class="badge bg-secondary-bg border border-color text-primary-accent px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider">Magazine Guides</span>
+                    </div>
+                    
+                    <h1 class="display-5 fw-bold text-white mb-3">
+                        Travel Guides <br>& <span class="text-gradient">Professional Insights</span>
+                    </h1>
+                    
+                    <p class="text-secondary mb-4">
+                        Discover top itineraries, travel insurance tips, safety hacks, and local destination highlights curated by our globetrotting experts.
+                    </p>
+                    
+                    <!-- Tag filters -->
+                    <div class="d-flex flex-wrap gap-2 mb-3">
+                        <button class="category-pill-btn active" data-category="all"><i class="bi bi-grid-fill"></i> All Categories</button>
+                        <button class="category-pill-btn" data-category="packing"><i class="bi bi-backpack-fill"></i> Packing Tips</button>
+                        <button class="category-pill-btn" data-category="destinations"><i class="bi bi-map-fill"></i> Destinations</button>
+                        <button class="category-pill-btn" data-category="planning"><i class="bi bi-calendar-event-fill"></i> Planning</button>
+                    </div>
+                </div>
+                
+                <!-- Right details: Magazine Card -->
+                <div class="col-lg-7 blog-entrance-right">
+                    <div class="magazine-card" id="magazine-main-card">
+                        <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800" 
+                             class="magazine-img" id="magazine-img-el" alt="Magazine Cover">
+                        
+                        <div class="magazine-overlay">
+                            <span class="badge bg-primary-accent text-dark mb-2" id="magazine-tag">FEATURED GUIDE</span>
+                            <h3 class="h4 text-white fw-bold mb-2" id="magazine-title">The Art of Packing Light: A Globetrotter's Guide</h3>
+                            <p class="text-secondary text-sm mb-3" id="magazine-desc">Discover how packing strategically saves money on airline fees and keeps you flexible during multi-destination tours.</p>
+                            
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    <img id="magazine-avatar" src="https://ui-avatars.com/api/?name=Elena+Rostova&background=FF5A5F&color=ffffff" 
+                                         class="rounded-circle me-2" style="width: 32px; height: 32px;" alt="Elena">
+                                    <div>
+                                        <small class="text-white fw-semibold d-block" id="magazine-author">Elena Rostova</small>
+                                    </div>
+                                </div>
+                                <span class="text-secondary text-xs" id="magazine-readtime"><i class="bi bi-clock me-1"></i>12 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Featured Post -->
+    <section class="py-5">
+        <div class="container">
+            <div id="featured-guide" class="glass-card p-4 mb-5 border-primary-accent" style="background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(20px);">
+                <div class="row g-4 align-items-center">
+                    <!-- Text details column -->
+                    <div class="col-lg-6 p-4">
+                        <span class="badge bg-primary-accent text-dark mb-3 px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider">FEATURED GUIDE</span>
+                        <h2 class="section-title text-white mb-3">The Art of Packing Light: A Globetrotter's Guide</h2>
+                        <p class="text-secondary mb-4">Discover how packing strategically saves money on airline fees and keeps you flexible during multi-destination tours. Read tips from our experienced travel guides.</p>
+                        
+                        <div class="d-flex flex-column flex-sm-row flex-wrap align-items-start align-items-sm-center justify-content-between p-3 rounded bg-secondary-bg border border-color gap-3">
+                            <div class="d-flex align-items-center">
+                                <img src="https://ui-avatars.com/api/?name=Elena+Rostova&background=FF5A5F&color=ffffff"
+                                    class="rounded-circle me-3" width="44" alt="Elena Rostova">
+                                <div>
+                                    <h6 class="mb-0 text-white text-nowrap">Elena Rostova</h6>
+                                    <p class="text-secondary text-xs mb-0 text-nowrap">Senior Travel Coordinator</p>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between w-100 d-sm-inline-flex w-sm-auto gap-3 text-nowrap">
+                                <span class="text-secondary text-xs"><i class="bi bi-clock me-1"></i>12 min read</span>
+                                <a href="#" class="btn btn-primary-custom btn-sm">Read Article</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Image with unique badge/caption overlay -->
+                    <div class="col-lg-6">
+                        <div class="position-relative overflow-hidden rounded-4 shadow-lg">
+                            <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800"
+                                class="img-fluid w-100" style="height: 420px; object-fit: cover;" alt="Targeted travel planning">
+                            <div class="position-absolute bottom-0 start-0 w-100 p-4" style="background: linear-gradient(to top, rgba(15,23,42,0.9), transparent);">
+                                <span class="badge bg-dark border border-secondary text-white-50 px-3 py-2"><i class="bi bi-lightbulb-fill text-warning me-2"></i>Packing Strategy</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Post Grid -->
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-4">
+                    <div class="glass-card p-0 h-100 d-flex flex-column">
+                        <img src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=400"
+                            class="blog-card-img w-100" alt="Kyoto temple view">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="text-primary-accent text-xs fw-bold mb-2 d-block">DESTINATIONS</span>
+                            <h4 class="h5 mb-3">10 Hidden Gems in Kyoto You Won't Find in Guidebooks</h4>
+                            <p class="text-secondary text-sm mb-4">An insider's look at quiet shrines, local noodle shops, and bamboo forests away from the tourist crowds.</p>
+                            <div class="mt-auto">
+                                <a href="#"
+                                    class="btn btn-link text-primary-accent p-0 text-sm text-decoration-none">Read
+                                    Full Post <i class="bi bi-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="glass-card p-0 h-100 d-flex flex-column">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=400"
+                            class="blog-card-img w-100" alt="Resort beach front">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="text-primary-accent text-xs fw-bold mb-2 d-block">PLANNING</span>
+                            <h4 class="h5 mb-3">How Travel Insurance Saves Your Vacation Budget</h4>
+                            <p class="text-secondary text-sm mb-4">Why a comprehensive travel policy is critical for international tours and how to select the right coverage.</p>
+                            <div class="mt-auto">
+                                <a href="#"
+                                    class="btn btn-link text-primary-accent p-0 text-sm text-decoration-none">Read
+                                    Full Post <i class="bi bi-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <div class="glass-card p-0 h-100 d-flex flex-column">
+                        <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&q=80&w=400"
+                            class="blog-card-img w-100" alt="Road trip landscape">
+                        <div class="p-4 d-flex flex-column flex-grow-1">
+                            <span class="text-primary-accent text-xs fw-bold mb-2 d-block">TIPS</span>
+                            <h4 class="h5 mb-3">5 Travel Hacks to Make Long Haul Flights Tolerable</h4>
+                            <p class="text-secondary text-sm mb-4">From seat selection to hydration routines, learn how our guides stay fresh during intercontinental flights.</p>
+                            <div class="mt-auto">
+                                <a href="#"
+                                    class="btn btn-link text-primary-accent p-0 text-sm text-decoration-none">Read
+                                    Full Post <i class="bi bi-arrow-right ms-2"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5 pt-5 text-center">
+                <button class="btn btn-outline-custom btn-lg">Load More Articles</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- NewsLetter Section -->
+    <section class="py-5 bg-secondary-bg mb-5">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <div class="glass-card p-2">
+                        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4 shadow-lg" alt="Subscribing to newsletter">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="display-6 fw-bold mb-4">Travel Inspiration, <br> <span class="text-gradient">Delivered Weekly</span></h2>
+                    <p class="text-secondary mb-5">Join 10,000+ travel enthusiasts receiving flight deals, package notifications, and travel tips directly in their inbox.</p>
+                    <form class="d-flex gap-2">
+                        <input type="email" class="form-control bg-transparent border-color text-white shadow-none p-3"
+                            placeholder="Your email address">
+                        <button class="btn btn-primary-custom px-4">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Write for Us Section -->
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="glass-card p-5 overflow-hidden">
+                <div class="row align-items-center g-5">
+                    <div class="col-lg-7 text-center text-lg-start">
+                        <h2 class="display-5 mb-4">Join our <span class="text-gradient">Community</span></h2>
+                        <p class="text-secondary lead mb-5">Are you a professional travel writer, digital nomad, or vacation blogger? We are always looking for fresh perspectives. Share your travel stories and guides with our audience.</p>
+                        <a href="contact.html" class="btn btn-outline-custom btn-lg">Partner With Us</a>
+                    </div>
+                    <div class="col-lg-5">
+                        <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&q=80&w=800"
+                            class="img-fluid rounded-4 shadow-lg" alt="Travel community group">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="navbar-brand d-flex align-items-center mb-4" href="index.html">
+                        <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2">
+                        <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+                    </a>
+                    <p class="text-secondary">A premium travel agency providing curated domestic and international packages with a state-of-the-art client portal for managing itineraries, bookings, and travel documents.</p>
+                    <div class="d-flex gap-3 fs-4 mt-4 social-links">
+                        <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Destinations</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Domestic Escapes</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">International Tours</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Main Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-decoration-none text-secondary">Services</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Tour Packages</a></li>
+                        <li class="mb-2"><a href="pricing.html" class="text-decoration-none text-secondary">Pricing</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-secondary">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <div class="glass-card p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white shadow-none"
+                            placeholder="Email Address">
+                        <button class="btn btn-primary-custom ms-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-5 text-secondary border-top border-color">
+                <p>&copy; 2026 VoyageRise Travel Agency. All Rights Reserved. Explore the World.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const blogPosts = {
+                all: {
+                    title: "The Art of Packing Light: A Globetrotter's Guide",
+                    tag: "FEATURED GUIDE",
+                    desc: "Discover how packing strategically saves money on airline fees and keeps you flexible during multi-destination tours.",
+                    img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800",
+                    author: "Elena Rostova",
+                    avatar: "https://ui-avatars.com/api/?name=Elena+Rostova&background=FF5A5F&color=ffffff",
+                    readtime: "12 min read"
+                },
+                packing: {
+                    title: "The Art of Packing Light: A Globetrotter's Guide",
+                    tag: "PACKING TIPS",
+                    desc: "Discover how packing strategically saves money on airline fees and keeps you flexible during multi-destination tours.",
+                    img: "https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&q=80&w=800",
+                    author: "Elena Rostova",
+                    avatar: "https://ui-avatars.com/api/?name=Elena+Rostova&background=FF5A5F&color=ffffff",
+                    readtime: "12 min read"
+                },
+                destinations: {
+                    title: "10 Hidden Gems in Kyoto You Won't Find in Guidebooks",
+                    tag: "DESTINATIONS",
+                    desc: "An insider's look at quiet shrines, local noodle shops, and bamboo forests away from the tourist crowds.",
+                    img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800",
+                    author: "Marcus Thorne",
+                    avatar: "https://ui-avatars.com/api/?name=Marcus+Thorne&background=FF5A5F&color=ffffff",
+                    readtime: "8 min read"
+                },
+                planning: {
+                    title: "How Travel Insurance Saves Your Vacation Budget",
+                    tag: "PLANNING",
+                    desc: "Why a comprehensive travel policy is critical for international tours and how to select the right coverage.",
+                    img: "https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&q=80&w=800",
+                    author: "Sophia Martinez",
+                    avatar: "https://ui-avatars.com/api/?name=Sophia+Martinez&background=FF5A5F&color=ffffff",
+                    readtime: "6 min read"
+                }
+            };
+            
+            const categoryBtns = document.querySelectorAll('.category-pill-btn');
+            const cardEl = document.getElementById('magazine-main-card');
+            const imgEl = document.getElementById('magazine-img-el');
+            const tagEl = document.getElementById('magazine-tag');
+            const titleEl = document.getElementById('magazine-title');
+            const descEl = document.getElementById('magazine-desc');
+            const authorEl = document.getElementById('magazine-author');
+            const avatarEl = document.getElementById('magazine-avatar');
+            const readtimeEl = document.getElementById('magazine-readtime');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    categoryBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const cat = btn.getAttribute('data-category');
+                    const post = blogPosts[cat];
+                    
+                    if (post) {
+                        // Apply quick fade out/skew effect
+                        cardEl.style.opacity = '0';
+                        cardEl.style.transform = 'scale(0.96) rotateY(5deg)';
+                        
+                        setTimeout(() => {
+                            imgEl.src = post.img;
+                            tagEl.textContent = post.tag;
+                            titleEl.textContent = post.title;
+                            descEl.textContent = post.desc;
+                            authorEl.textContent = post.author;
+                            avatarEl.src = post.avatar;
+                            readtimeEl.innerHTML = `<i class="bi bi-clock me-1"></i>${post.readtime}`;
+                            
+                            // Fade back in
+                            cardEl.style.opacity = '1';
+                            cardEl.style.transform = 'scale(1) rotateY(0deg)';
+                        }, 250);
+                    }
+                });
+            });
+            
+            // Set transition styles programmatically
+            cardEl.style.transition = 'all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1)';
+        });
+    </script>
+</body>
+
+</html>

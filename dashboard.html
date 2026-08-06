@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | VoyageRise Travel Agency</title>
+    <link class="brand-favicon" rel="icon" type="image/png" href="assets/images/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+    <style>
+        /* Responsive adjustments */
+        #overview-section .overview-metric-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #overview-section .overview-metric-label {
+            min-height: 48px;
+        }
+
+        #overview-section .overview-metric-change {
+            min-height: 48px;
+        }
+
+        /* Customize selector aesthetics */
+        .option-select-card {
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        .option-select-card p {
+            flex-grow: 1;
+        }
+        .option-select-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary-accent) !important;
+        }
+        .option-select-card .selected-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--primary-accent);
+            color: #0b1020;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        .option-select-card.selected {
+            border-color: var(--primary-accent) !important;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.15);
+        }
+        .option-select-card.selected .selected-badge {
+            opacity: 1;
+        }
+        .produce-img-placeholder {
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        body:not(.light-theme) .text-secondary {
+            color: #b8c0d4 !important;
+        }
+    </style>
+</head>
+
+<body class="bg-primary-bg">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="d-flex justify-content-between align-items-center mb-5">
+            <a href="index.html" class="d-flex align-items-center text-decoration-none">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2" style="width: 30px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="btn btn-link text-white d-lg-none p-0" id="sidebar-close" aria-label="Close Menu" onclick="document.getElementById('sidebar').classList.remove('active')">
+                <i class="bi bi-x-lg fs-4"></i>
+            </button>
+        </div>
+
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active" onclick="showSection('overview')">
+                <i class="bi bi-grid-fill"></i> Overview
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('produce')">
+                <i class="bi bi-compass"></i> Custom Options
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('delivery')">
+                <i class="bi bi-calendar-event"></i> Travel Itinerary
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('documents')">
+                <i class="bi bi-file-earmark-arrow-up"></i> Document Vault
+            </a>
+            <a href="#" class="sidebar-link" onclick="showSection('orders')">
+                <i class="bi bi-credit-card"></i> Orders & Installments
+            </a>
+            <hr class="border-color my-4">
+            <a href="#" class="sidebar-link" onclick="showSection('settings')">
+                <i class="bi bi-gear"></i> Account Settings
+            </a>
+            <a href="login.html" class="sidebar-link text-danger mt-4">
+                <i class="bi bi-box-arrow-left"></i> Logout
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Top Header -->
+        <header class="d-flex justify-content-between align-items-center mb-5 sticky-top py-3" style="background-color: var(--primary-bg); z-index: 1020; top: 0;">
+            <div class="d-flex align-items-center">
+                <button class="btn btn-link text-white d-lg-none p-0 me-3" id="sidebar-toggle">
+                    <i class="bi bi-list fs-2"></i>
+                </button>
+                <div>
+                    <h1 class="fs-3 fw-bold mb-0 text-white">Dashboard</h1>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                        <i class="bi bi-moon-stars"></i>
+                    </button>
+                    <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                        RTL
+                    </button>
+                </div>
+                <img src="https://ui-avatars.com/api/?name=Subscriber+User&background=FF5A5F&color=ffffff"
+                    class="rounded-circle" width="40" alt="Avatar">
+            </div>
+        </header>
+
+        <!-- OVERVIEW SECTION -->
+        <div id="overview-section" class="content-section">
+            <!-- Stats Grid -->
+            <div class="row g-4 mb-5">
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card overview-metric-card h-100">
+                        <div class="stat-icon"
+                            style="background: rgba(255, 107, 53, 0.1); color: var(--primary-accent);">
+                            <i class="bi bi-compass"></i>
+                        </div>
+                        <p class="text-secondary text-sm mb-1 overview-metric-label">Booked Package</p>
+                        <h3 class="mb-0">Globetrotter</h3>
+                        <p class="text-success text-sm mb-0 mt-2 overview-metric-change">Kyoto & Tokyo Tour</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card overview-metric-card h-100">
+                        <div class="stat-icon"
+                            style="background: rgba(14, 165, 233, 0.1); color: var(--secondary-accent);">
+                            <i class="bi bi-calendar-event"></i>
+                        </div>
+                        <p class="text-secondary text-sm mb-1 overview-metric-label">Departure Date</p>
+                        <h3 class="mb-0">Oct 12, 2026</h3>
+                        <p class="text-success text-sm mb-0 mt-2 overview-metric-change">Itinerary locks in 30 days</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card overview-metric-card h-100">
+                        <div class="stat-icon" style="background: rgba(255, 107, 53, 0.1); color: var(--primary-accent);">
+                            <i class="bi bi-wallet2"></i>
+                        </div>
+                        <p class="text-secondary text-sm mb-1 overview-metric-label">Installment Status</p>
+                        <h3 class="mb-0" id="skip-status-val">2 / 4 Paid</h3>
+                        <p class="text-secondary text-sm mb-0 mt-2 overview-metric-change">Next due: Sep 01 ($325.00)</p>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-xl-3">
+                    <div class="dashboard-card overview-metric-card h-100">
+                        <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--warning);">
+                            <i class="bi bi-file-earmark-lock-fill"></i>
+                        </div>
+                        <p class="text-secondary text-sm mb-1 overview-metric-label">Document Vault</p>
+                        <h3 class="mb-0">3 Uploads</h3>
+                        <p class="text-secondary text-sm mb-0 mt-2 overview-metric-change">2 Verified, 1 Pending</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row g-4 mb-5">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="h5 mb-0">Booking Statistics (Domestic vs International)</h4>
+                            <select
+                                class="form-select bg-transparent border-color text-sm text-secondary w-auto shadow-none">
+                                <option>Last 7 Weeks</option>
+                                <option>Last 30 Weeks</option>
+                            </select>
+                        </div>
+                        <div style="height: 300px; position: relative; width: 100%;">
+                            <canvas id="engagementChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h4 class="h5 mb-0">Tour Selections</h4>
+                        </div>
+                        <div style="height: 300px; position: relative; width: 100%;">
+                            <canvas id="deviceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Travel Status Logs & Upcoming Bookings -->
+            <div class="row g-4 mb-5">
+                <!-- Live Travel Status Updates -->
+                <div class="col-lg-6">
+                    <div class="dashboard-card h-100">
+                        <h4 class="h5 mb-4 d-flex align-items-center">
+                            <i class="bi bi-broadcast text-primary-accent me-2"></i> Live Travel Status Logs
+                        </h4>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="badge bg-success text-white">VISA APPROVED</span>
+                                    <span class="text-secondary text-xs">Today, 9:30 AM</span>
+                                </div>
+                                <p class="mb-0 text-sm">Your Japanese tourist visa has been approved and issued by the consulate.</p>
+                            </div>
+                            <div class="p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="badge bg-info text-white">FLIGHT CONFIRMED</span>
+                                    <span class="text-secondary text-xs">Yesterday, 3:15 PM</span>
+                                </div>
+                                <p class="mb-0 text-sm">Direct flight VR-804 reservation from SFO to NRT has been successfully booked.</p>
+                            </div>
+                            <div class="p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span class="badge bg-warning text-dark">HOTEL RESERVED</span>
+                                    <span class="text-secondary text-xs">2 days ago</span>
+                                </div>
+                                <p class="mb-0 text-sm">Accommodation at Kyoto Grand Resort & Tokyo Shinagawa Hotel confirmed for 7 nights.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Bookings Tracker -->
+                <div class="col-lg-6">
+                    <div class="dashboard-card h-100">
+                        <h4 class="h5 mb-4">Upcoming Booking Tracker</h4>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-glass mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-secondary border-0">Departure Date</th>
+                                        <th class="text-secondary border-0">Tour Package</th>
+                                        <th class="text-secondary border-0">Installment Due</th>
+                                        <th class="text-secondary border-0">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Oct 12, 2026</td>
+                                        <td>Kyoto-Tokyo Tour</td>
+                                        <td>Sep 01, 2026</td>
+                                        <td><span class="status-badge status-active">Confirmed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Jan 18, 2027</td>
+                                        <td>Grand Canyon Adventure</td>
+                                        <td>Dec 15, 2026</td>
+                                        <td><span class="status-badge status-paused">Scheduled</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>May 05, 2027</td>
+                                        <td>Signature World Tour</td>
+                                        <td>Apr 01, 2027</td>
+                                        <td><span class="status-badge status-paused">Scheduled</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CUSTOM OPTIONS SECTION -->
+        <div id="produce-section" class="content-section d-none">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-4">
+                <div>
+                    <h2 class="h3 mb-0">Customize Tour Options</h2>
+                    <p class="text-secondary mb-0 text-sm">Select custom activities and hotel accommodation upgrades for your upcoming trip.</p>
+                </div>
+                <button class="btn btn-primary-custom w-100 w-md-auto" onclick="alert('Your tour customizations have been saved for the October 12 departure!')">
+                    <i class="bi bi-save me-2"></i> Save Options
+                </button>
+            </div>
+            
+            <div class="row g-4">
+                <!-- Custom Activities -->
+                <div class="col-12"><h4 class="h5 mt-3 mb-2 border-bottom border-color pb-2">Custom Activities (Select up to 4)</h4></div>
+                
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card selected" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Tea Ceremony">
+                        <h5 class="h6 mb-1 text-white">Tea Ceremony Experience</h5>
+                        <p class="text-secondary text-xs mb-0">Traditional matcha preparation and zen etiquette.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card selected" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Bullet Train">
+                        <h5 class="h6 mb-1 text-white">Bullet Train Upgrade</h5>
+                        <p class="text-secondary text-xs mb-0">Upgrade transit segments to premium Green Car.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card selected" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Food Tour">
+                        <h5 class="h6 mb-1 text-white">Tsukiji Market Tour</h5>
+                        <p class="text-secondary text-xs mb-0">Guided gourmet walking tour and fresh sushi tasting.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Robot Show">
+                        <h5 class="h6 mb-1 text-white">Shinjuku Robot Show</h5>
+                        <p class="text-secondary text-xs mb-0">High-tech neon visual show ticket in Tokyo.</p>
+                    </div>
+                </div>
+
+                <!-- Accommodation Tiers -->
+                <div class="col-12"><h4 class="h5 mt-3 mb-2 border-bottom border-color pb-2">Accommodation Tiers (Select One)</h4></div>
+
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card selected" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Luxury Hotel">
+                        <h5 class="h6 mb-1 text-white">5-Star Luxury Hotels</h5>
+                        <p class="text-secondary text-xs mb-0">Premium resort lodging with breakfast and spa access.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="glass-card p-3 option-select-card" onclick="this.classList.toggle('selected')">
+                        <div class="selected-badge"><i class="bi bi-check"></i></div>
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=300" class="w-100 produce-img-placeholder mb-3" alt="Ryokan">
+                        <h5 class="h6 mb-1 text-white">Traditional Ryokan</h5>
+                        <p class="text-secondary text-xs mb-0">Japanese tatami room stay with private Onsen bath.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRAVEL ITINERARY & SCHEDULE SECTION -->
+        <div id="delivery-section" class="content-section d-none">
+            <div class="row g-4">
+                <!-- Delivery Preferences Control -->
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <h4 class="h5 mb-4 border-bottom border-color pb-3">Travel Preferences</h4>
+                        <form id="deliveryPrefForm" onsubmit="event.preventDefault(); alert('Travel preferences updated successfully!');">
+                            <!-- Toggle Itinerary Active -->
+                            <div class="p-3 bg-secondary-bg rounded border border-color mb-4 d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="h6 text-white mb-1">Confirm Itinerary Status</h5>
+                                    <p class="text-secondary text-xs mb-0">Unlock choices for October 12 departure.</p>
+                                </div>
+                                <div class="form-check form-switch p-0" style="width: 50px;">
+                                    <input class="form-check-input ms-0 w-100 h-100 py-1" type="checkbox" id="confirmItineraryToggle" onchange="
+                                        const val = document.getElementById('skip-status-val');
+                                        if(this.checked) {
+                                            val.textContent = 'Itinerary Locked';
+                                            val.parentElement.parentElement.classList.add('border-danger');
+                                        } else {
+                                            val.textContent = '2 / 4 Paid';
+                                            val.parentElement.parentElement.classList.remove('border-danger');
+                                        }
+                                    ">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label text-secondary text-sm">Preferred Departure Window</label>
+                                <select class="form-select bg-transparent border-color text-white shadow-none p-3">
+                                    <option class="text-dark">Morning Flight (8:00 AM - 12:00 PM)</option>
+                                    <option class="text-dark">Afternoon/Evening Flight (1:00 PM - 7:00 PM)</option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label text-secondary text-sm">Dietary & Flight Assistance Requests</label>
+                                <textarea class="form-control bg-transparent border-color text-white shadow-none p-3" rows="3" 
+                                    placeholder="e.g. Vegetarian meal for all flight segments. Wheelchair assistance required during airport transit."></textarea>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary-custom w-100 py-3">Save Preferences</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Day-by-Day Itinerary -->
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <h4 class="h5 mb-4">Day-by-Day Itinerary</h4>
+                        <p class="text-secondary text-sm mb-4">Track daily sightseeing tours, transfers, and activities confirmed for your vacation.</p>
+                        <div class="d-flex flex-column gap-3">
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
+                                    <div class="bg-primary-accent rounded p-2 text-dark me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
+                                    <div class="flex-grow-1" style="min-width: 0;">
+                                        <div class="fw-bold">Day 1 - Tokyo Arrival</div>
+                                        <div class="text-secondary text-xs text-wrap">Arrive at NRT, private airport transfer, welcome dinner at sushi house.</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-success flex-shrink-0 ms-3">Confirmed</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
+                                    <div class="bg-secondary rounded p-2 me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
+                                    <div class="flex-grow-1" style="min-width: 0;">
+                                        <div class="fw-bold">Day 2 - Tokyo Sightseeing</div>
+                                        <div class="text-secondary text-xs text-wrap">Guided Senso-ji Temple and Meiji Shrine tour, Shibuya lunch.</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-warning text-dark flex-shrink-0 ms-3">Confirmed</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                                <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
+                                    <div class="bg-secondary rounded p-2 me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
+                                    <div class="flex-grow-1" style="min-width: 0;">
+                                        <div class="fw-bold">Day 3 - Mt. Fuji Excursion</div>
+                                        <div class="text-secondary text-xs text-wrap">Bullet train to Hakone, Lake Ashi cruise, Ryokan Tatami hot spring stay.</div>
+                                    </div>
+                                </div>
+                                <span class="badge bg-secondary flex-shrink-0 ms-3">Confirmed</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DOCUMENT VAULT SECTION -->
+        <div id="documents-section" class="content-section d-none">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="dashboard-card">
+                        <h4 class="h5 mb-4 border-bottom border-color pb-3">Upload Travel Documents</h4>
+                        <form id="docUploadForm" onsubmit="event.preventDefault(); alert('Document uploaded successfully for review!');">
+                            <div class="mb-4">
+                                <label class="form-label text-secondary text-sm">Select Document Type</label>
+                                <select class="form-select bg-transparent border-color text-white shadow-none p-3">
+                                    <option class="text-dark">Passport Scan (First Page)</option>
+                                    <option class="text-dark">Tourist Visa Application</option>
+                                    <option class="text-dark">Travel Insurance Policy</option>
+                                    <option class="text-dark">Flight E-Ticket</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label text-secondary text-sm">Upload File (PDF, JPG, PNG)</label>
+                                <input type="file" class="form-control bg-transparent border-color text-white shadow-none p-3">
+                            </div>
+                            <button type="submit" class="btn btn-primary-custom w-100 py-3">Submit Document</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="dashboard-card text-start">
+                        <h4 class="h5 mb-4">Verification Status</h4>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-glass mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-secondary border-0">Document Name</th>
+                                        <th class="text-secondary border-0">Uploaded Date</th>
+                                        <th class="text-secondary border-0">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Passport_JohnDoe.pdf</td>
+                                        <td>June 16, 2026</td>
+                                        <td><span class="status-badge status-active">Verified</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Visa_Form_Japan.pdf</td>
+                                        <td>June 20, 2026</td>
+                                        <td><span class="status-badge status-active">Verified</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Travel_Insurance_Cert.jpg</td>
+                                        <td>Yesterday</td>
+                                        <td><span class="status-badge status-paused">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORDERS & INSTALLMENTS SECTION -->
+        <div id="orders-section" class="content-section d-none">
+            <div class="row g-4">
+                <!-- Payment Information Details -->
+                <div class="col-lg-5">
+                    <div class="dashboard-card h-100">
+                        <h4 class="h5 mb-4 border-bottom border-color pb-3">Billing Settings</h4>
+                        
+                        <div class="glass-card p-4 mb-4 border-primary-accent" style="background: rgba(255, 107, 53, 0.03);">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="h6 text-white mb-0">Globetrotter Pass</h5>
+                                <span class="badge bg-primary-accent text-dark">Active</span>
+                            </div>
+                            <h3 class="display-6 fw-bold text-white mb-1">$325.00 <span class="fs-6 text-secondary font-normal">/ month</span></h3>
+                            <p class="text-secondary text-sm mb-4">Next billing charge on September 01, 2026.</p>
+                            <hr class="border-color mb-4">
+                            
+                            <div class="d-flex align-items-center mb-3">
+                                <i class="bi bi-credit-card-2-front text-primary-accent fs-3 me-3"></i>
+                                <div>
+                                    <div class="fw-bold text-white">Visa ending in 4242</div>
+                                    <div class="text-secondary text-xs">Expires 12 / 2028</div>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-custom w-100 btn-sm" onclick="alert('Redirecting to Payment Customer Portal...')">Update Payment Method</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Installment History -->
+                <div class="col-lg-7">
+                    <div class="dashboard-card h-100">
+                        <h4 class="h5 mb-4">Successful Payment Log</h4>
+                        <div class="table-responsive">
+                            <table class="table table-dark table-glass mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="text-secondary border-0">Receipt ID</th>
+                                        <th class="text-secondary border-0">Date</th>
+                                        <th class="text-secondary border-0">Description</th>
+                                        <th class="text-secondary border-0">Total</th>
+                                        <th class="text-secondary border-0">Invoice</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#VR-9231</td>
+                                        <td>Aug 01, 2026</td>
+                                        <td>Installment 2 of 4 (Globetrotter)</td>
+                                        <td>$325.00</td>
+                                        <td><a href="#" class="text-primary-accent text-decoration-none" onclick="event.preventDefault(); alert('Downloading Invoice #VR-9231...')"><i class="bi bi-download"></i> PDF</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#VR-9104</td>
+                                        <td>Jul 01, 2026</td>
+                                        <td>Installment 1 of 4 (Globetrotter)</td>
+                                        <td>$325.00</td>
+                                        <td><a href="#" class="text-primary-accent text-decoration-none" onclick="event.preventDefault(); alert('Downloading Invoice #VR-9104...')"><i class="bi bi-download"></i> PDF</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#VR-8982</td>
+                                        <td>Jun 15, 2026</td>
+                                        <td>Deposit payment (Globetrotter)</td>
+                                        <td>$100.00</td>
+                                        <td><a href="#" class="text-primary-accent text-decoration-none" onclick="event.preventDefault(); alert('Downloading Invoice #VR-8982...')"><i class="bi bi-download"></i> PDF</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACCOUNT SETTINGS SECTION -->
+        <div id="settings-section" class="content-section d-none">
+            <div class="row g-4">
+                <div class="col-lg-8">
+                    <div class="dashboard-card">
+                        <h4 class="h5 mb-4 border-bottom border-color pb-3">Profile Information</h4>
+                        <form onsubmit="event.preventDefault(); alert('Profile updated successfully!');">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary text-sm">Full Name</label>
+                                    <input type="text"
+                                        class="form-control bg-transparent border-color text-white shadow-none"
+                                        value="John Doe">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary text-sm">Email Address</label>
+                                    <input type="email"
+                                        class="form-control bg-transparent border-color text-white shadow-none"
+                                        value="john.doe@example.com">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary text-sm">Contact Phone</label>
+                                    <input type="text"
+                                        class="form-control bg-transparent border-color text-white shadow-none"
+                                        value="(555) 123-4567">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label text-secondary text-sm">Home Address</label>
+                                    <input type="text"
+                                        class="form-control bg-transparent border-color text-white shadow-none"
+                                        value="123 Urban Green Way, Apt 4B, San Francisco, CA">
+                                </div>
+                                <div class="col-12 text-center">
+                                    <button class="btn btn-primary-custom px-5">Save Changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="dashboard-card">
+                        <h4 class="h5 mb-4 border-bottom border-color pb-3">Subscription Details</h4>
+                        <div class="badge bg-primary-accent text-dark mb-3">Globetrotter Pass</div>
+                        <p class="text-white fw-bold mb-1">$325 / month</p>
+                        <p class="text-secondary text-sm mb-4">Itinerary Lock on September 12, 2026</p>
+                        <button class="btn btn-outline-custom btn-sm w-100" onclick="showSection('orders')">Manage Booking</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

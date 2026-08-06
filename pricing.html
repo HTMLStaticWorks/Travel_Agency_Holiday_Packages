@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Plans | VoyageRise Travel Agency</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <style>
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .pricing-plans-row .pricing-feature-list li {
+                display: grid !important;
+                grid-template-columns: 22px 1fr;
+                column-gap: 10px;
+                align-items: start !important;
+            }
+
+            .pricing-plans-row .pricing-feature-list li i {
+                margin-right: 0 !important;
+                margin-top: 2px;
+            }
+
+            .pricing-plans-row .pricing-feature-list li span {
+                display: block;
+            }
+        }
+
+        /* Reduce Excessive Spacing */
+        section.py-5 {
+            padding-top: 3rem !important;
+            padding-bottom: 3rem !important;
+        }
+        section.mt-5 {
+            margin-top: 2rem !important;
+        }
+        .container.pt-5, .container.py-5 {
+            padding-top: 1rem !important;
+            padding-bottom: 1rem !important;
+        }
+        .mb-5 {
+            margin-bottom: 1.75rem !important;
+        }
+
+        /* Dark Mode Text Contrast Fix */
+        body:not(.light-theme) .text-secondary {
+            color: #b8c0d4 !important;
+        }
+        body:not(.light-theme) .badge.bg-primary-accent.text-dark {
+            color: #ffffff !important;
+        }
+        
+        body:not(.light-theme) .visa-logo {
+            filter: brightness(0) invert(1);
+        }
+
+        @media (width: 1024px) {
+            section.bg-secondary-bg .row.g-4 > .col-sm-6 {
+                display: flex;
+            }
+
+            section.bg-secondary-bg .row.g-4 > .col-sm-6 > .glass-card {
+                width: 100%;
+                height: 100%;
+            }
+        }
+        }
+
+        /* Pricing Hero Custom styles */
+        .pricing-hero {
+            position: relative;
+            padding: 120px 0 60px;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 107, 53, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 70%, rgba(255, 138, 61, 0.04) 0%, transparent 50%);
+            overflow: hidden;
+        }
+        .pricing-hero-glow {
+            position: absolute;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.06) 0%, transparent 70%);
+            filter: blur(40px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Trust Badges */
+        .trust-badge-pill {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            padding: 8px 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: #b8c0d4;
+        }
+        body.light-theme .trust-badge-pill {
+            background: rgba(255, 255, 255, 0.6);
+            border-color: rgba(0,0,0,0.05);
+            color: #1a202c;
+        }
+        /* Custom Switch */
+        .pricing-toggle-wrap {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 6px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        body.light-theme .pricing-toggle-wrap {
+            background: rgba(0, 0, 0, 0.04);
+            border-color: rgba(0, 0, 0, 0.05);
+        }
+        .pricing-toggle-btn {
+            background: transparent;
+            border: none;
+            color: #b8c0d4;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        body.light-theme .pricing-toggle-btn {
+            color: #4a5568;
+        }
+        .pricing-toggle-btn.active {
+            background: var(--primary-accent);
+            color: #fff !important;
+            box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+        }
+
+        /* Interactive Slider styling */
+        .slider-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 20px 45px rgba(0,0,0,0.15);
+            position: relative;
+        }
+        body.light-theme .slider-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        .range-slider-premium {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.1);
+            outline: none;
+            margin: 20px 0;
+        }
+        body.light-theme .range-slider-premium {
+            background: rgba(0,0,0,0.1);
+        }
+        .range-slider-premium::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: var(--primary-accent);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--primary-accent);
+            transition: transform 0.1s ease;
+        }
+        .range-slider-premium::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        /* Custom Progress Bar inside slider card */
+        .slider-progress-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+        .slider-progress-fill {
+            height: 100%;
+            width: 30%;
+            background: linear-gradient(90deg, var(--primary-accent), var(--secondary-accent));
+            transition: width 0.3s ease;
+        }
+
+        /* Wave SVG animation (Saving Wave) */
+        .wave-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 40px;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        .wave-svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 40px;
+        }
+        .wave-path {
+            fill: rgba(255, 107, 53, 0.06);
+            animation: waveFlow 4s linear infinite;
+        }
+        @keyframes waveFlow {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Entrance Animation */
+        .price-entrance-left {
+            opacity: 0;
+            transform: translateX(-30px);
+            animation: prcRevealLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .price-entrance-right {
+            opacity: 0;
+            transform: translateX(30px);
+            animation: prcRevealRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.1s;
+        }
+        @keyframes prcRevealLeft {
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes prcRevealRight {
+            to { opacity: 1; transform: translateX(0); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" class="me-2" style="height: 32px; width: 32px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-2"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home2.html">Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Tour Packages</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Travel Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="dashboard.html" class="btn btn-outline-custom btn-sm d-flex align-items-center"
+                        title="Client Portal Dashboard">
+                        <i class="bi bi-grid-fill"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                            RTL
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn btn-primary-custom btn-sm d-flex align-items-center" title="Login">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Pricing Hero (Tier Comparison & Calculator Layout) -->
+    <header class="pricing-hero position-relative">
+        <div class="pricing-hero-glow" style="top: 20%; right: 15%;"></div>
+        <div class="pricing-hero-glow" style="bottom: 10%; left: 10%;"></div>
+        
+        <!-- Wave SVG at bottom -->
+        <div class="wave-container">
+            <svg class="wave-svg" viewBox="0 0 120 28" preserveAspectRatio="none">
+                <defs>
+                    <path id="wave-path-id" d="M0 15 C 30 20, 30 10, 60 15 C 90 20, 90 10, 120 15 L 120 28 L 0 28 Z" />
+                </defs>
+                <use href="#wave-path-id" class="wave-path" x="0" />
+                <use href="#wave-path-id" class="wave-path" x="60" />
+            </svg>
+        </div>
+        
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-6 price-entrance-left">
+                    <div class="mb-4">
+                        <span class="trust-badge-pill">
+                            <i class="bi bi-shield-fill-check text-primary-accent"></i> 100% Secure Installment Milestones
+                        </span>
+                    </div>
+                    
+                    <h1 class="display-5 fw-bold text-white mb-3">
+                        Flexible Travel Pricing <br><span class="text-gradient">Designed For You</span>
+                    </h1>
+                    
+                    <p class="text-secondary mb-4 pe-lg-3">
+                        Pick between weekly and monthly installments, or estimate your budget using our interactive sliding simulator to choose the best plan tier.
+                    </p>
+                    
+                    <!-- Weekly / Monthly Toggle -->
+                    <div class="pricing-toggle-wrap mb-4">
+                        <button class="pricing-toggle-btn active" id="btn-weekly">Weekly Payment</button>
+                        <button class="pricing-toggle-btn" id="btn-monthly">Monthly Payment</button>
+                    </div>
+                </div>
+                
+                <!-- Right details: Interactive Calculator -->
+                <div class="col-lg-6 price-entrance-right">
+                    <div class="slider-card">
+                        <h4 class="h5 text-white mb-3"><i class="bi bi-calculator-fill text-primary-accent me-2"></i>Vacation Budget Estimator</h4>
+                        <p class="text-secondary text-sm mb-4">Drag the slider to set your target trip budget and view matching plans and estimated monthly savings.</p>
+                        
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-secondary text-xs">Trip Budget Target</span>
+                            <span class="fw-bold text-white" id="budget-value">$3,000</span>
+                        </div>
+                        
+                        <input type="range" class="range-slider-premium" id="budget-range" min="1000" max="10000" step="500" value="3000">
+                        
+                        <div class="row g-3 mt-2 text-start">
+                            <div class="col-6">
+                                <span class="text-secondary text-xs d-block">Recommended Plan</span>
+                                <span class="fw-bold text-gradient text-uppercase" id="calc-plan">Adventure Pass</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-secondary text-xs d-block">Estimated Saving</span>
+                                <span class="fw-bold text-success" id="calc-saving">$300/mo</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Progress Visualizer -->
+                        <div class="slider-progress-bar">
+                            <div class="slider-progress-fill" id="calc-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Pricing Cards Section -->
+    <section class="py-5">
+        <div class="container py-4">
+
+            <div class="row g-4 justify-content-center pricing-plans-row">
+                <!-- Explorer Pass -->
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 d-flex flex-column">
+                        <div style="height: 40px;" class="mb-4"></div> <!-- Badge Spacer -->
+                        <h3 class="h5 text-white mb-4">Explorer Pass</h3>
+                        <div class="display-4 fw-bold mb-4 text-white">$<span class="price-val" data-weekly="35" data-monthly="120">35</span> <span class="fs-6 text-secondary fw-normal price-period">/wk</span></div>
+                        <p class="text-secondary text-sm mb-4">Perfect for domestic weekends or short retreats.</p>
+                        <hr class="border-color mb-5">
+                        <ul class="list-unstyled text-start mb-5 pricing-feature-list">
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Curated Domestic Package</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>3-Star Hotel Lodging</span></li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Basic Client Dashboard</span>
+                            </li>
+                            <li class="mb-3 text-secondary d-flex align-items-center"><i
+                                    class="bi bi-dash-circle me-2"></i><span>No International Tours</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="register.html" class="btn btn-outline-custom w-100">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Globetrotter Pass -->
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 border-primary-accent d-flex flex-column"
+                        style="box-shadow: 0 0 40px rgba(255, 107, 53, 0.1);">
+                        <div class="text-center mb-4" style="height: 40px;">
+                            <div class="badge px-3 py-2 fw-semibold" style="background-color: var(--primary-accent); color: #0b1020; letter-spacing: 0.05em;">MOST POPULAR</div>
+                        </div>
+                        <h3 class="h5 text-white mb-4">Globetrotter Pass</h3>
+                        <div class="display-4 fw-bold mb-4 text-white">$<span class="price-val" data-weekly="90" data-monthly="320">90</span> <span class="fs-6 text-secondary fw-normal price-period">/wk</span>
+                        </div>
+                        <p class="text-secondary text-sm mb-4">Curated domestic & international tours.</p>
+                        <hr class="border-color mb-5">
+                        <ul class="list-unstyled text-start mb-5 pricing-feature-list">
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Domestic & International Tours</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>4-Star Hotel Accommodation</span></li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Full Itinerary Customization</span></li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Priority Document Verification</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>24/7 Digital Concierge Support</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="register.html" class="btn btn-primary-custom w-100">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Luxury Escape -->
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 d-flex flex-column">
+                        <div style="height: 40px;" class="mb-4"></div> <!-- Badge Spacer -->
+                        <h3 class="h5 text-white mb-4">Luxury Escape</h3>
+                        <div class="display-4 fw-bold mb-4 text-white">$<span class="price-val" data-weekly="210" data-monthly="750">210</span> <span class="fs-6 text-secondary fw-normal price-period">/wk</span></div>
+                        <p class="text-secondary text-sm mb-4">5-star resort retreats & premium guides.</p>
+                        <hr class="border-color mb-5">
+                        <ul class="list-unstyled text-start mb-5 pricing-feature-list">
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>5-Star Luxury Resort Stay</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Priority Flight Reservations</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>VIP Airport Transfers & Lounges</span>
+                            </li>
+                            <li class="mb-3 d-flex align-items-center"><i
+                                    class="bi bi-check-circle-fill text-primary-accent me-2"></i><span>Express Visa Processing Support</span></li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="contact.html" class="btn btn-outline-custom w-100">Contact Agency</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Premium Support Section -->
+    <section class="py-5 bg-secondary-bg">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="display-5 mb-4">Dedicated <span class="text-gradient">Support & Guidance</span></h2>
+                    <p class="text-secondary lead">Whether you choose our Explorer plan or our Luxury pass, our travel coordinators and on-trip guides are available 24/7 to assist with your journey.</p>
+                    <ul class="list-unstyled mt-5">
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-check2-circle text-primary-accent me-3 fs-5"></i>
+                            <span>Offline PDF itineraries and ticket vault access</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-check2-circle text-primary-accent me-3 fs-5"></i>
+                            <span>One-on-one visa and document consulting</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-4">
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 text-center">
+                                <i class="bi bi-chat-text text-primary-accent fs-1 mb-3 d-block"></i>
+                                <h4 class="h5">Itinerary Support</h4>
+                                <p class="text-secondary text-sm mb-0">Talk to our coordinators for custom trip adjustments.</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="glass-card p-4 text-center">
+                                <i class="bi bi-journal-text text-primary-accent fs-1 mb-3 d-block"></i>
+                                <h4 class="h5">On-Trip Guides</h4>
+                                <p class="text-secondary text-sm mb-0">Access professional local tour guides and guides directory.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust & Confidence Section -->
+    <section class="py-5">
+        <div class="container py-5 text-center">
+            <div class="glass-card p-5 max-w-600 mx-auto">
+                <div class="mb-4">
+                    <i class="bi bi-shield-lock-fill text-primary-accent display-4"></i>
+                </div>
+                <h3 class="h2 mb-3">Secure Payment Guarantee</h3>
+                <p class="text-secondary mb-4">All packages support flexible payment installments. We partner with world-class payment processors to keep your transaction details fully secure.</p>
+                <div class="d-flex justify-content-center align-items-center gap-5 opacity-75 grayscale-hover">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg"
+                        height="25" alt="Stripe">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg" height="25" alt="PayPal">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='24' viewBox='0 0 72 24'%3E%3Ctext x='0' y='18' font-family='Arial, Helvetica, sans-serif' font-size='18' font-weight='700' fill='%231A1F71'%3EVISA%3C/text%3E%3C/svg%3E"
+                        height="20" alt="Visa" class="visa-logo">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5 mt-5">
+        <div class="container py-5">
+            <h2 class="display-5 text-center mb-5">Common Questions</h2>
+            <div class="accordion max-w-600 mx-auto" id="pricingFaqAccordion">
+                <div class="accordion-item glass-card mb-3 border-color">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-transparent text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faqOne" aria-expanded="false"
+                            aria-controls="faqOne">
+                            Can I customize my itinerary after booking?
+                        </button>
+                    </h2>
+                    <div id="faqOne" class="accordion-collapse collapse" data-bs-parent="#pricingFaqAccordion">
+                        <div class="accordion-body text-secondary">
+                            Yes! You can customize daily activities, hotel options, and transit details in your client portal up to 14 days before your departure date.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item glass-card mb-3 border-color">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-transparent text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faqTwo" aria-expanded="false"
+                            aria-controls="faqTwo">
+                            What is the travel installment payment policy?
+                        </button>
+                    </h2>
+                    <div id="faqTwo" class="accordion-collapse collapse" data-bs-parent="#pricingFaqAccordion">
+                        <div class="accordion-body text-secondary">
+                            You can split the package price into weekly or monthly installments. The final installment is due 10 days before your departure. No hidden interest charges.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item glass-card mb-3 border-color">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-transparent text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faqThree" aria-expanded="false"
+                            aria-controls="faqThree">
+                            Can I cancel or reschedule my holiday package?
+                        </button>
+                    </h2>
+                    <div id="faqThree" class="accordion-collapse collapse" data-bs-parent="#pricingFaqAccordion">
+                        <div class="accordion-body text-secondary">
+                            Absolutely. You can reschedule your trip free of charge up to 30 days before departure. Cancellations are subject to partial refunds depending on hotel/flight policies.
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item glass-card border-color">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed bg-transparent text-white" type="button"
+                            data-bs-toggle="collapse" data-bs-target="#faqFour" aria-expanded="false"
+                            aria-controls="faqFour">
+                            What document formats do you accept for visa verification?
+                        </button>
+                    </h2>
+                    <div id="faqFour" class="accordion-collapse collapse" data-bs-parent="#pricingFaqAccordion">
+                        <div class="accordion-body text-secondary">
+                            We accept PDF, JPEG, and PNG formats. Simply upload your passport page and photos to your client portal for review by our visa team.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="navbar-brand d-flex align-items-center mb-4" href="index.html">
+                        <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2">
+                        <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+                    </a>
+                    <p class="text-secondary">A premium travel agency providing curated domestic and international packages with a state-of-the-art client portal for managing itineraries, bookings, and travel documents.</p>
+                    <div class="d-flex gap-3 fs-4 mt-4 social-links">
+                        <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Destinations</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Domestic Escapes</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">International Tours</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Main Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-decoration-none text-secondary">Services</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Tour Packages</a></li>
+                        <li class="mb-2"><a href="pricing.html" class="text-decoration-none text-secondary">Pricing</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-secondary">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <div class="glass-card p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white shadow-none"
+                            placeholder="Email Address">
+                        <button class="btn btn-primary-custom ms-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-5 text-secondary border-top border-color">
+                <p>&copy; 2026 VoyageRise Travel Agency. All Rights Reserved. Explore the World.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btnWeekly = document.getElementById('btn-weekly');
+            const btnMonthly = document.getElementById('btn-monthly');
+            const priceVals = document.querySelectorAll('.price-val');
+            const pricePeriods = document.querySelectorAll('.price-period');
+            
+            // Count up animation helper
+            const animatePrice = (element, targetValue) => {
+                const start = parseInt(element.textContent);
+                const end = parseInt(targetValue);
+                if (start === end) return;
+                const duration = 400; // ms
+                const startTime = performance.now();
+                
+                const update = (now) => {
+                    const elapsed = now - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const current = Math.floor(start + progress * (end - start));
+                    element.textContent = current;
+                    if (progress < 1) {
+                        requestAnimationFrame(update);
+                    } else {
+                        element.textContent = end;
+                    }
+                };
+                requestAnimationFrame(update);
+            };
+            
+            const toggleBilling = (mode) => {
+                if (mode === 'weekly') {
+                    btnWeekly.classList.add('active');
+                    btnMonthly.classList.remove('active');
+                    priceVals.forEach(el => {
+                        animatePrice(el, el.getAttribute('data-weekly'));
+                    });
+                    pricePeriods.forEach(el => el.textContent = '/wk');
+                } else {
+                    btnMonthly.classList.add('active');
+                    btnWeekly.classList.remove('active');
+                    priceVals.forEach(el => {
+                        animatePrice(el, el.getAttribute('data-monthly'));
+                    });
+                    pricePeriods.forEach(el => el.textContent = '/mo');
+                }
+            };
+            
+            btnWeekly.addEventListener('click', () => toggleBilling('weekly'));
+            btnMonthly.addEventListener('click', () => toggleBilling('monthly'));
+            
+            // Budget Estimator Slider Logic
+            const budgetRange = document.getElementById('budget-range');
+            const budgetValue = document.getElementById('budget-value');
+            const calcPlan = document.getElementById('calc-plan');
+            const calcSaving = document.getElementById('calc-saving');
+            const calcProgress = document.getElementById('calc-progress');
+            
+            const updateCalculator = () => {
+                const val = parseInt(budgetRange.value);
+                budgetValue.textContent = `$${val.toLocaleString()}`;
+                
+                // recommended plan tier based on budget
+                let plan = "Explorer Pass";
+                let savingPercent = 0.08;
+                if (val >= 6000) {
+                    plan = "Luxury Escape";
+                    savingPercent = 0.15;
+                } else if (val >= 3000) {
+                    plan = "Globetrotter Pass";
+                    savingPercent = 0.12;
+                }
+                
+                calcPlan.textContent = plan;
+                
+                // Savings estimate
+                const monthlySaving = Math.round(val * savingPercent / 12);
+                calcSaving.textContent = `$${monthlySaving}/mo`;
+                
+                // Progress fill
+                const min = parseInt(budgetRange.min);
+                const max = parseInt(budgetRange.max);
+                const pct = ((val - min) / (max - min)) * 100;
+                calcProgress.style.width = `${pct}%`;
+            };
+            
+            budgetRange.addEventListener('input', updateCalculator);
+            updateCalculator();
+        });
+    </script>
+</body>
+
+</html>

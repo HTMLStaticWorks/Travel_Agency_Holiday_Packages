@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tour Packages | VoyageRise Travel Agency</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <style>
+        .portfolio-img {
+            height: 300px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 25px;
+        }
+
+        @media (min-width: 992px) and (max-width: 1199.98px) {
+            .portfolio-grid-primary>.col-lg-6 {
+                display: flex;
+            }
+
+            .portfolio-card-equal {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                height: 100%;
+            }
+
+            .portfolio-metrics {
+                margin-top: auto;
+                flex-wrap: wrap;
+            }
+
+            .testimonial-header {
+                min-height: 100px;
+            }
+
+            .testimonial-header .text-xs {
+                min-height: 44px;
+                line-height: 1.4;
+            }
+        }
+
+        .testimonial-card-uniform {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        .testimonial-header {
+            min-height: 56px;
+        }
+
+        .testimonial-meta {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (min-width: 992px) {
+            .testimonial-header {
+                min-height: 104px;
+            }
+
+            .testimonial-meta {
+                min-height: 78px;
+            }
+
+            .testimonial-rating {
+                min-height: 24px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+        }
+
+        body:not(.light-theme) .process-step-number {
+            background: rgba(255, 107, 53, 0.14);
+            border: 1px solid rgba(255, 107, 53, 0.35);
+            color: #ffffff !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        @media (max-width: 576px) {
+            .luxe-metrics {
+                gap: 0.5rem !important;
+                flex-wrap: nowrap;
+            }
+
+            .luxe-chip {
+                white-space: nowrap;
+                font-size: 0.78rem !important;
+                padding: 0.45rem 0.6rem !important;
+            }
+
+            .process-kpi-card {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .process-kpi-value {
+                min-height: 52px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .process-kpi-label {
+                min-height: 72px;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                text-align: center;
+                line-height: 1.35;
+            }
+        }
+
+        /* Tour Packages Hero CSS */
+        .map-hero {
+            position: relative;
+            padding: 120px 0 100px;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 107, 53, 0.05) 0%, transparent 60%);
+            overflow: hidden;
+        }
+        .map-hero-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 138, 61, 0.08) 0%, transparent 70%);
+            filter: blur(50px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        /* Custom Search bar design */
+        .search-wrapper {
+            position: relative;
+            max-width: 500px;
+        }
+        .search-input-premium {
+            background: rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 16px !important;
+            padding: 18px 24px 18px 50px !important;
+            color: #fff !important;
+            font-size: 1.05rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+        }
+        body.light-theme .search-input-premium {
+            background: rgba(255, 255, 255, 0.7) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            color: #1a202c !important;
+        }
+        .search-input-premium::placeholder {
+            color: #b8c0d4;
+        }
+        .search-icon-inside {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-accent);
+            font-size: 1.25rem;
+            z-index: 10;
+        }
+        .search-results-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            z-index: 99;
+            max-height: 250px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+        body.light-theme .search-results-dropdown {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: rgba(0,0,0,0.1);
+        }
+        .search-result-item {
+            padding: 12px 20px;
+            color: #fff;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        body.light-theme .search-result-item {
+            color: #1a202c;
+        }
+        .search-result-item:hover {
+            background: rgba(255, 107, 53, 0.15);
+        }
+
+        /* Map Graphics styling */
+        .map-canvas-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(255,255,255,0.02);
+            border-radius: 24px;
+            border: 1px solid rgba(255,255,255,0.08);
+            overflow: hidden;
+        }
+        body.light-theme .map-canvas-container {
+            background: rgba(0,0,0,0.01);
+            border-color: rgba(0,0,0,0.05);
+        }
+        .map-bg-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.12;
+            filter: grayscale(1) invert(1);
+        }
+        body.light-theme .map-bg-image {
+            opacity: 0.08;
+            filter: grayscale(1);
+        }
+
+        /* Map Pins */
+        .map-hotspot {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-accent);
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            transition: transform 0.3s ease;
+        }
+        .map-hotspot::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border: 2px solid var(--primary-accent);
+            border-radius: 50%;
+            opacity: 0;
+            animation: pinPulse 2s infinite;
+        }
+        @keyframes pinPulse {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: scale(1.8); opacity: 0; }
+        }
+        .map-hotspot.active, .map-hotspot:hover {
+            transform: scale(1.3);
+            background: var(--secondary-accent);
+        }
+
+        /* Positioning Pins on Map */
+        .pin-kyoto { top: 35%; left: 78%; }
+        .pin-amalfi { top: 42%; left: 45%; }
+        .pin-serengeti { top: 62%; left: 52%; }
+        .pin-bali { top: 68%; left: 74%; }
+
+        /* Map Info Card Overlay */
+        .map-preview-card {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            z-index: 15;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+        }
+        .map-preview-card.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Entrance Animations */
+        .map-entrance-left {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: mapRevealLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .map-entrance-right {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: mapRevealRight 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            animation-delay: 0.2s;
+        }
+        @keyframes mapRevealLeft {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes mapRevealRight {
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" class="me-2" style="height: 32px; width: 32px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-2"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home2.html">Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="portfolio.html">Tour Packages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Travel Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="dashboard.html" class="btn btn-outline-custom btn-sm d-flex align-items-center"
+                        title="Client Portal Dashboard">
+                        <i class="bi bi-grid-fill"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                            RTL
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn btn-primary-custom btn-sm d-flex align-items-center" title="Login">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Portfolio Hero (Interactive Map Layout) -->
+    <header class="map-hero position-relative">
+        <div class="map-hero-glow" style="top: 15%; left: 20%;"></div>
+        <div class="map-hero-glow" style="bottom: 10%; right: 10%;"></div>
+        
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-5 map-entrance-left">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <div class="rounded-circle bg-primary-bg p-2 border border-color d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+                            <i class="bi bi-geo-fill text-primary-accent"></i>
+                        </div>
+                        <span class="badge bg-secondary-bg border border-color text-primary-accent px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider">Interactive Map Search</span>
+                    </div>
+                    
+                    <h1 class="display-5 fw-bold text-white mb-3">
+                        Find Your Next <br><span class="text-gradient">Signature Holiday</span>
+                    </h1>
+                    
+                    <p class="text-secondary mb-4">
+                        Search destinations by country, continent, or activity, or hover over pins on our global map to preview active tour packages.
+                    </p>
+                    
+                    <!-- Search Input with Dropdown -->
+                    <div class="search-wrapper mb-4">
+                        <i class="bi bi-search search-icon-inside"></i>
+                        <input type="text" class="form-control search-input-premium" id="destination-search" placeholder="Type destination (e.g. Kyoto, Amalfi, Serengeti)...">
+                        
+                        <!-- Dropdown suggestions -->
+                        <div class="search-results-dropdown" id="search-dropdown">
+                            <div class="search-result-item" data-pin="kyoto">
+                                <span>Kyoto & Tokyo Heritage</span>
+                                <span class="badge bg-primary-accent text-dark">Japan | 7 Days</span>
+                            </div>
+                            <div class="search-result-item" data-pin="amalfi">
+                                <span>Amalfi Coast Escape</span>
+                                <span class="badge bg-primary-accent text-dark">Italy | 5 Days</span>
+                            </div>
+                            <div class="search-result-item" data-pin="serengeti">
+                                <span>Serengeti Luxury Safari</span>
+                                <span class="badge bg-primary-accent text-dark">Tanzania | 6 Days</span>
+                            </div>
+                            <div class="search-result-item" data-pin="bali">
+                                <span>Bali Tropical Retreat</span>
+                                <span class="badge bg-primary-accent text-dark">Indonesia | 8 Days</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right details: Abstract Map Canvas -->
+                <div class="col-lg-7 map-entrance-right">
+                    <div class="map-canvas-container">
+                        <!-- Simulated world map background -->
+                        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=800" 
+                             class="map-bg-image" alt="Abstract map background">
+                        
+                        <!-- Map Hotspots -->
+                        <div class="map-hotspot pin-kyoto" data-pin="kyoto" title="Kyoto, Japan"></div>
+                        <div class="map-hotspot pin-amalfi" data-pin="amalfi" title="Amalfi, Italy"></div>
+                        <div class="map-hotspot pin-serengeti" data-pin="serengeti" title="Serengeti, Tanzania"></div>
+                        <div class="map-hotspot pin-bali" data-pin="bali" title="Bali, Indonesia"></div>
+                        
+                        <!-- Map Preview Card (Overlay) -->
+                        <div class="map-preview-card glass-card-premium" id="map-overlay-card">
+                            <div class="d-flex align-items-center gap-3">
+                                <img id="overlay-img" src="" class="rounded-3" style="width: 70px; height: 70px; object-fit: cover;" alt="Preview image">
+                                <div class="flex-grow-1">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary-accent text-dark text-xs mb-1" id="overlay-tag">INTERNATIONAL</span>
+                                        <span class="text-white fw-bold" id="overlay-duration">7 Days</span>
+                                    </div>
+                                    <h5 class="h6 mb-0 text-white fw-bold" id="overlay-title">Kyoto & Tokyo Heritage</h5>
+                                    <small class="text-secondary text-xs" id="overlay-desc">Explore temples, bullet trains, and culture.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Portfolio Grid -->
+    <section class="py-5">
+        <div class="container pb-5">
+            <div class="row g-5 portfolio-grid-primary">
+                <!-- Kyoto & Tokyo Heritage -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 portfolio-card-equal">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=800"
+                            class="portfolio-img w-100" alt="Kyoto & Tokyo Heritage">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <span class="badge bg-primary-accent text-dark mb-3">INTERNATIONAL TOUR</span>
+                                <h3 class="h4">Kyoto & Tokyo Heritage</h3>
+                            </div>
+                            <div class="text-end">
+                                <h4 class="h3 mb-0 text-gradient">7 Days</h4>
+                                <p class="text-secondary text-sm">Tour Duration</p>
+                            </div>
+                        </div>
+                        <p class="text-secondary mb-4">Experience the contrast of ancient traditions and modern lifestyle. From historic Kyoto temples to the neon-lit streets of Tokyo. Led by professional English-speaking guides and including Bullet Train travel.</p>
+                        <div class="d-flex gap-3 portfolio-metrics">
+                            <span class="text-sm bg-secondary-bg px-3 py-2 rounded-3 border border-color"><i
+                                    class="bi bi-shield-check me-2"></i> Flights Included</span>
+                            <span class="text-sm bg-secondary-bg px-3 py-2 rounded-3 border border-color"><i
+                                    class="bi bi-clock me-2"></i> 4-Star Accommodation</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grand Canyon Adventure -->
+                <div class="col-lg-6">
+                    <div class="glass-card p-4 portfolio-card-equal">
+                        <img src="https://images.unsplash.com/photo-1615551043360-33de8b5f410c?auto=format&fit=crop&q=80&w=800"
+                            class="portfolio-img w-100" alt="Grand Canyon Adventure">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <span class="badge status-paused text-warning mb-3">DOMESTIC ESCAPE</span>
+                                <h3 class="h4">Grand Canyon Adventure</h3>
+                            </div>
+                            <div class="text-end">
+                                <h4 class="h3 mb-0 text-gradient">4 Days</h4>
+                                <p class="text-secondary text-sm">Tour Duration</p>
+                            </div>
+                        </div>
+                        <p class="text-secondary mb-4">Witness one of the natural wonders of the world. Includes guided trails, sunset helicopter tours, and comfortable lodging inside the Grand Canyon National Park. Perfect for active outdoor enthusiasts.</p>
+                        <div class="d-flex gap-3 portfolio-metrics luxe-metrics">
+                            <span class="text-sm bg-secondary-bg px-3 py-2 rounded-3 border border-color luxe-chip"><i
+                                    class="bi bi-stars me-2"></i> Ground Transit</span>
+                            <span class="text-sm bg-secondary-bg px-3 py-2 rounded-3 border border-color luxe-chip"><i
+                                    class="bi bi-moisture me-2"></i> National Park Lodge</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Signature World Tour -->
+                <div class="col-lg-12">
+                    <div class="glass-card p-3 p-sm-4 p-md-5">
+                        <div class="row align-items-center">
+                            <div class="col-lg-7 mb-4 mb-lg-0 text-center text-lg-start">
+                                <span class="badge bg-secondary-accent text-white mb-3">SIGNATURE ESCAPES</span>
+                                <h2 class="display-6 mb-4">VoyageRise Signature World Tour</h2>
+                                <p class="text-secondary lead mb-4">A breathtaking 14-day international tour covering London, Paris, and Rome. Includes high-speed rail tickets, premium 5-star hotel accommodation, curated museum passes, and private airport transfers.</p>
+                                <div class="row g-2 g-sm-3 g-md-4 mb-5">
+                                    <div class="col-4">
+                                        <h4 class="h5 mb-1 text-primary-accent text-nowrap">14 Days</h4>
+                                        <p class="text-secondary text-xs">Total Duration</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 class="h5 mb-1 text-primary-accent text-nowrap">100%</h4>
+                                        <p class="text-secondary text-xs">Guided Support</p>
+                                    </div>
+                                    <div class="col-4">
+                                        <h4 class="h5 mb-1 text-primary-accent text-nowrap">5-Star</h4>
+                                        <p class="text-secondary text-xs">Hotel Accommodation</p>
+                                    </div>
+                                </div>
+                                <a href="register.html" class="btn btn-primary-custom">Book Signature Tour</a>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="glass-card p-2 border-0 bg-transparent">
+                                    <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&q=80&w=800"
+                                        class="img-fluid rounded-4 shadow-lg" alt="Signature World Tour">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Testimonials Section -->
+    <section class="py-5 bg-secondary-bg mt-5" id="testimonials">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 mb-3">What <span class="text-gradient">Travelers Say</span></h2>
+                <p class="text-secondary max-w-600 mx-auto">Real feedback from clients who booked holiday packages and managed their travel files through our portal.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 testimonial-card-uniform text-center">
+                        <div class="d-flex flex-column align-items-center mb-4 testimonial-header">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+Chen&background=FF5A5F&color=ffffff"
+                                class="rounded-circle mb-3" width="50" alt="Client Sarah">
+                            <div class="testimonial-meta">
+                                <h5 class="h6 mb-0">Sarah Chen</h5>
+                                <p class="text-secondary text-xs mb-0">Tokyo-Kyoto Explorer</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 testimonial-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-secondary mb-0 testimonial-quote">"The Kyoto-Tokyo tour package from VoyageRise was extremely well-organized. The interactive itinerary app was a lifesaver in the train stations. The client portal is wonderful."</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 testimonial-card-uniform text-center">
+                        <div class="d-flex flex-column align-items-center mb-4 testimonial-header">
+                            <img src="https://ui-avatars.com/api/?name=Marcus+Johnson&background=FF5A5F&color=ffffff"
+                                class="rounded-circle mb-3" width="50" alt="Client Marcus">
+                            <div class="testimonial-meta">
+                                <h5 class="h6 mb-0">Marcus Johnson</h5>
+                                <p class="text-secondary text-xs mb-0">Hawaii Escape Client</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 testimonial-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-secondary mb-0 testimonial-quote">"Our Hawaii escape was wonderful. The portal document vault made uploading our travel IDs and flight details so secure and easy."</p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="glass-card p-5 h-100 testimonial-card-uniform text-center">
+                        <div class="d-flex flex-column align-items-center mb-4 testimonial-header">
+                            <img src="https://ui-avatars.com/api/?name=Emily+Rodriguez&background=FF5A5F&color=ffffff"
+                                class="rounded-circle mb-3" width="50" alt="Client Emily">
+                            <div class="testimonial-meta">
+                                <h5 class="h6 mb-0">Emily Rodriguez</h5>
+                                <p class="text-secondary text-xs mb-0">Corporate HR Manager</p>
+                            </div>
+                        </div>
+                        <div class="mb-3 testimonial-rating">
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                            <i class="bi bi-star-fill text-warning"></i>
+                        </div>
+                        <p class="text-secondary mb-0 testimonial-quote">"VoyageRise handles all our corporate travel and annual retreats. The document management and installment invoices are incredibly clear and professional."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process & Methodology Section -->
+    <section class="py-5 mt-5" id="growing-process">
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="display-5 mb-4">Our <span class="text-gradient">Travel Process</span></h2>
+                    <p class="text-secondary lead mb-5">We follow a strategic approach to ensure your vacation goes exactly as planned, from booking to your return.</p>
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary-accent rounded-circle p-3 text-dark me-4 process-step-number"
+                                    style="min-width: 60px; height: 60px;">
+                                    <span class="fw-bold">01</span>
+                                </div>
+                                <div>
+                                    <h4 class="h5 mb-2">Select Package & Duration</h4>
+                                    <p class="text-secondary mb-0">Choose from our domestic or international packages, select your preferred travel duration, and book online.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary-accent rounded-circle p-3 text-dark me-4 process-step-number"
+                                    style="min-width: 60px; height: 60px;">
+                                    <span class="fw-bold">02</span>
+                                </div>
+                                <div>
+                                    <h4 class="h5 mb-2">Upload Travel Files</h4>
+                                    <p class="text-secondary mb-0">Submit passport scans, visas, and travel insurance files safely through our secure client document vault.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="d-flex align-items-start">
+                                <div class="bg-primary-accent rounded-circle p-3 text-dark me-4 process-step-number"
+                                    style="min-width: 60px; height: 60px;">
+                                    <span class="fw-bold">03</span>
+                                </div>
+                                <div>
+                                    <h4 class="h5 mb-2">Enjoy Your Adventure</h4>
+                                    <p class="text-secondary mb-0">Embark on your journey with offline itineraries, flight alerts, and 24/7 support right on your dashboard.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="glass-card p-5 text-center">
+                        <div class="row g-4">
+                            <div class="col-6 d-flex flex-column">
+                                <div class="glass-card p-3 p-sm-4 h-100 w-100 d-flex flex-column align-items-center justify-content-center process-kpi-card" style="min-height: 200px;">
+                                    <i class="bi bi-emoji-smile fs-1 text-primary-accent mb-3 d-block"></i>
+                                    <h3 class="h4 mb-1 process-kpi-value">98%</h3>
+                                    <p class="text-secondary text-sm process-kpi-label mb-0">Satisfaction Rate</p>
+                                </div>
+                            </div>
+                            <div class="col-6 d-flex flex-column">
+                                <div class="glass-card p-3 p-sm-4 h-100 w-100 d-flex flex-column align-items-center justify-content-center process-kpi-card" style="min-height: 200px;">
+                                    <i class="bi bi-headset fs-1 text-primary-accent mb-3 d-block"></i>
+                                    <h3 class="h4 mb-1 process-kpi-value">24/7</h3>
+                                    <p class="text-secondary text-sm process-kpi-label mb-0">Live Trip Support</p>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="glass-card p-4">
+                                    <i class="bi bi-shield-fill-check fs-1 text-gradient mb-3 d-block"></i>
+                                    <h3 class="h4 mb-1">100% Secure</h3>
+                                    <p class="text-secondary text-sm">Protected Document Vault</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="navbar-brand d-flex align-items-center mb-4" href="index.html">
+                        <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2">
+                        <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+                    </a>
+                    <p class="text-secondary">A premium travel agency providing curated domestic and international packages with a state-of-the-art client portal for managing itineraries, bookings, and travel documents.</p>
+                    <div class="d-flex gap-3 fs-4 mt-4 social-links">
+                        <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Destinations</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Domestic Escapes</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">International Tours</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Main Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-decoration-none text-secondary">Services</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Tour Packages</a></li>
+                        <li class="mb-2"><a href="pricing.html" class="text-decoration-none text-secondary">Pricing</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-secondary">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <div class="glass-card p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white shadow-none"
+                            placeholder="Email Address">
+                        <button class="btn btn-primary-custom ms-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-5 text-secondary border-top border-color">
+                <p>&copy; 2026 VoyageRise Travel Agency. All Rights Reserved. Explore the World.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const destinations = {
+                kyoto: {
+                    title: "Kyoto & Tokyo Heritage",
+                    tag: "INTERNATIONAL TOUR",
+                    duration: "7 Days",
+                    desc: "Experience ancient temples, ryokan hot springs, and bullet trains.",
+                    img: "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&q=80&w=200"
+                },
+                amalfi: {
+                    title: "Amalfi Coast Escape",
+                    tag: "INTERNATIONAL TOUR",
+                    duration: "5 Days",
+                    desc: "Walk historic cliffside paths, taste limoncello, and sail the Mediterranean.",
+                    img: "https://images.unsplash.com/photo-1533900298318-6b8da08a523e?auto=format&fit=crop&q=80&w=200"
+                },
+                serengeti: {
+                    title: "Serengeti Luxury Safari",
+                    tag: "INTERNATIONAL TOUR",
+                    duration: "6 Days",
+                    desc: "Witness the Great Migration, luxury tent lodging, and sunrise game drives.",
+                    img: "https://images.unsplash.com/photo-1516426122078-c23e76319801?auto=format&fit=crop&q=80&w=200"
+                },
+                bali: {
+                    title: "Bali Tropical Retreat",
+                    tag: "INTERNATIONAL TOUR",
+                    duration: "8 Days",
+                    desc: "Relax in Ubud private pool villas, scenic temple visits, and sandy beaches.",
+                    img: "https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&q=80&w=200"
+                }
+            };
+            
+            const searchInput = document.getElementById('destination-search');
+            const dropdown = document.getElementById('search-dropdown');
+            const overlayCard = document.getElementById('map-overlay-card');
+            const overlayImg = document.getElementById('overlay-img');
+            const overlayTag = document.getElementById('overlay-tag');
+            const overlayDuration = document.getElementById('overlay-duration');
+            const overlayTitle = document.getElementById('overlay-title');
+            const overlayDesc = document.getElementById('overlay-desc');
+            const hotspots = document.querySelectorAll('.map-hotspot');
+            
+            const showPreview = (key) => {
+                const data = destinations[key];
+                if (!data) return;
+                
+                hotspots.forEach(pin => {
+                    if (pin.getAttribute('data-pin') === key) {
+                        pin.classList.add('active');
+                    } else {
+                        pin.classList.remove('active');
+                    }
+                });
+                
+                overlayImg.src = data.img;
+                overlayTag.textContent = data.tag;
+                overlayDuration.textContent = data.duration;
+                overlayTitle.textContent = data.title;
+                overlayDesc.textContent = data.desc;
+                overlayCard.classList.add('show');
+            };
+            
+            hotspots.forEach(pin => {
+                pin.addEventListener('mouseenter', () => {
+                    const key = pin.getAttribute('data-pin');
+                    showPreview(key);
+                });
+            });
+            
+            // Search Input keyup
+            searchInput.addEventListener('input', () => {
+                const query = searchInput.value.toLowerCase().trim();
+                const items = dropdown.querySelectorAll('.search-result-item');
+                let count = 0;
+                
+                items.forEach(item => {
+                    const text = item.textContent.toLowerCase();
+                    if (text.includes(query)) {
+                        item.style.display = 'flex';
+                        count++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                dropdown.style.display = (query.length > 0 && count > 0) ? 'block' : 'none';
+            });
+            
+            // Select dropdown item
+            dropdown.querySelectorAll('.search-result-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const key = item.getAttribute('data-pin');
+                    searchInput.value = item.querySelector('span').textContent;
+                    dropdown.style.display = 'none';
+                    showPreview(key);
+                });
+            });
+            
+            // Close dropdown and card on document click
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-wrapper')) {
+                    dropdown.style.display = 'none';
+                }
+            });
+            
+            // Default show first
+            showPreview('kyoto');
+        });
+    </script>
+</body>
+
+</html>

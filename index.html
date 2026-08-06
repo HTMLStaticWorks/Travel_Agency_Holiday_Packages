@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoyageRise Travel Agency & Holiday Packages | Explore the World</title>
+    <link rel="icon" type="image/png" href="assets/images/logo.svg">
+    <meta name="description"
+        content="Curated domestic and international holiday packages by destination and duration. Manage itineraries, bookings, payments, and document submissions in our client portal.">
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/dark-mode.css">
+    <link rel="stylesheet" href="assets/css/rtl.css">
+    
+    <style>
+        /* Home Page Hero Custom Styles */
+        .home-hero {
+            position: relative;
+            padding: 120px 0 100px;
+            background: radial-gradient(circle at 10% 20%, rgba(255, 107, 53, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, rgba(255, 138, 61, 0.05) 0%, transparent 40%);
+            overflow: hidden;
+        }
+        .home-hero-glow {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 107, 53, 0.12) 0%, transparent 70%);
+            filter: blur(50px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .home-hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+        .animated-text-container {
+            height: 1.25em;
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+        }
+        .animated-text-list {
+            animation: textSlide 8s cubic-bezier(0.76, 0, 0.24, 1) infinite;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        .animated-text-list li {
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        @keyframes textSlide {
+            0%, 20% { transform: translateY(0); }
+            25%, 45% { transform: translateY(-1.3em); }
+            50%, 70% { transform: translateY(-2.6em); }
+            75%, 95% { transform: translateY(-3.9em); }
+            100% { transform: translateY(0); }
+        }
+        /* Clouds and Plane */
+        .clouds-bg {
+            position: absolute;
+            top: 10%;
+            left: 0;
+            width: 100%;
+            height: 80%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+        .cloud-item {
+            position: absolute;
+            animation: cloudMove 40s linear infinite;
+        }
+        .cloud-1 { top: 10%; left: -10%; transform: scale(0.8); }
+        .cloud-2 { top: 50%; left: -20%; animation-duration: 60s; transform: scale(1.2); }
+        .cloud-3 { top: 80%; left: -15%; animation-duration: 50s; transform: scale(0.9); }
+        @keyframes cloudMove {
+            0% { left: -20%; }
+            100% { left: 120%; }
+        }
+        .flying-plane {
+            position: absolute;
+            top: 25%;
+            left: -50px;
+            font-size: 1.5rem;
+            color: var(--primary-accent);
+            transform: rotate(15deg);
+            animation: planeFly 25s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.8;
+        }
+        @keyframes planeFly {
+            0% { left: -50px; top: 25%; }
+            50% { top: 15%; }
+            100% { left: calc(100% + 50px); top: 30%; }
+        }
+        /* Image & Parallax Cards */
+        .hero-img-container {
+            position: relative;
+            z-index: 1;
+        }
+        .main-scenic-img {
+            height: 480px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.5s ease;
+        }
+        .main-scenic-img:hover {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        .parallax-card {
+            position: absolute;
+            z-index: 3;
+            transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: auto;
+        }
+        /* Glassmorphism details */
+        .glass-card-premium {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 12px 18px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            color: #fff;
+        }
+        body.light-theme .glass-card-premium {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.08);
+            color: #1a202c;
+        }
+        /* Positioning Parallax Cards */
+        .dest-card { top: 10%; left: -5%; }
+        .price-card { bottom: 15%; right: -5%; }
+        .weather-card { top: 40%; right: -8%; }
+        .rating-card { bottom: -5%; left: 10%; }
+
+        /* Magnetic Button helper */
+        .magnetic-btn {
+            transition: transform 0.2s ease-out;
+        }
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+            animation: bounceIndicator 2s infinite;
+        }
+        @keyframes bounceIndicator {
+            0%, 20%, 50%, 80%, 100% { transform: translate(-50%, 0); }
+            40% { transform: translate(-50%, -10px); }
+            60% { transform: translate(-50%, -5px); }
+        }
+
+        /* Entrance Animations */
+        .entrance-fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUpReveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .entrance-fade-up:nth-child(1) { animation-delay: 0.1s; }
+        .entrance-fade-up:nth-child(2) { animation-delay: 0.2s; }
+        .entrance-fade-up:nth-child(3) { animation-delay: 0.3s; }
+        .entrance-fade-up:nth-child(4) { animation-delay: 0.4s; }
+        .entrance-fade-up:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes fadeUpReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-xl navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="index.html">
+                <img src="assets/images/logo.svg" alt="VoyageRise Logo" class="me-2" style="height: 32px; width: 32px;">
+                <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="bi bi-list text-white fs-2"></i>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="home2.html">Hot Deals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="portfolio.html">Tour Packages</a></li>
+                    <li class="nav-item"><a class="nav-link" href="pricing.html">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="blog.html">Travel Blog</a></li>
+                    <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="d-flex align-items-center gap-3">
+                    <a href="dashboard.html" class="btn btn-outline-custom btn-sm d-flex align-items-center"
+                        title="Client Portal Dashboard">
+                        <i class="bi bi-grid-fill"></i>
+                    </a>
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="theme-toggle" title="Toggle Theme">
+                            <i class="bi bi-moon-stars"></i>
+                        </button>
+                        <button class="btn btn-outline-custom btn-sm d-flex align-items-center justify-content-center nav-toggle-btn" id="rtl-toggle" title="RTL">
+                            RTL
+                        </button>
+                    </div>
+                    <a href="login.html" class="btn btn-primary-custom btn-sm d-flex align-items-center" title="Login">
+                        Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="home-hero text-center text-lg-start position-relative">
+        <div class="home-hero-glow" style="top: 20%; left: 10%;"></div>
+        <div class="home-hero-glow" style="bottom: 15%; right: 5%;"></div>
+        
+        <!-- Cloud Background Elements -->
+        <div class="clouds-bg">
+            <div class="cloud-item cloud-1"><i class="bi bi-cloudy-fill fs-1 text-white opacity-25"></i></div>
+            <div class="cloud-item cloud-2"><i class="bi bi-cloud-fill fs-2 text-white opacity-25"></i></div>
+            <div class="cloud-item cloud-3"><i class="bi bi-cloudy fs-3 text-white opacity-25"></i></div>
+        </div>
+        
+        <!-- Animated Airplane -->
+        <div class="flying-plane"><i class="bi bi-airplane-fill fs-3"></i></div>
+        
+        <div class="container">
+            <div class="row align-items-center g-5">
+                <!-- Left Details -->
+                <div class="col-lg-6 mb-5 mb-lg-0 text-start position-relative animate-container" style="z-index: 2;">
+                    <div class="entrance-fade-up">
+                        <span class="badge bg-secondary-bg border border-color text-primary-accent mb-3 px-3 py-2 rounded-pill fw-bold text-uppercase tracking-wider"><i class="bi bi-compass-fill me-1"></i> Vibrant Travel Agency</span>
+                    </div>
+                    
+                    <div class="entrance-fade-up">
+                        <h1 class="home-hero-title text-white mb-4">
+                            Explore Curated <br>
+                            <div class="animated-text-container">
+                                <ul class="animated-text-list">
+                                    <li>Holiday</li>
+                                    <li>Adventure</li>
+                                    <li>Luxury</li>
+                                    <li>Gateway</li>
+                                </ul>
+                            </div> Packages
+                        </h1>
+                    </div>
+                    
+                    <div class="entrance-fade-up">
+                        <p class="lead text-secondary mb-4 pe-lg-5">
+                            Discover breathtaking domestic and international packages sorted by destination and duration. Access our premium client portal to download itineraries, track installments, and submit travel documents.
+                        </p>
+                    </div>
+                    
+                    <div class="d-flex flex-column flex-sm-row gap-3 mb-5 entrance-fade-up">
+                        <a href="portfolio.html" class="btn btn-primary-custom btn-lg px-4 magnetic-btn"><i class="bi bi-compass me-2"></i>Browse Holiday Packages</a>
+                        <a href="dashboard.html" class="btn btn-outline-custom btn-lg px-4 magnetic-btn"><i class="bi bi-person-badge me-2"></i>Access Client Portal</a>
+                    </div>
+                    
+                    <!-- Stats section with Counter Animation -->
+                    <div class="pt-4 border-top border-color entrance-fade-up">
+                        <div class="row g-3 text-start">
+                            <div class="col-4">
+                                <h3 class="fw-extrabold text-gradient mb-0" data-target="15000">0</h3>
+                                <small class="text-secondary text-xs text-uppercase tracking-wider">Happy Travelers</small>
+                            </div>
+                            <div class="col-4">
+                                <h3 class="fw-extrabold text-gradient mb-0" data-target="250">0</h3>
+                                <small class="text-secondary text-xs text-uppercase tracking-wider">Tours Offered</small>
+                            </div>
+                            <div class="col-4">
+                                <h3 class="fw-extrabold text-gradient mb-0" data-target="49" data-decimals="1">0</h3>
+                                <small class="text-secondary text-xs text-uppercase tracking-wider">Trust Rating</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right Gallery with Parallax Hover Cards -->
+                <div class="col-lg-6 position-relative hero-img-container">
+                    <div class="position-relative ps-lg-4 d-flex justify-content-center align-items-center">
+                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800"
+                            alt="Explore Beautiful Destinations" class="main-scenic-img shadow-lg">
+                        
+                        <!-- Floating Glass Cards -->
+                        <div class="parallax-card dest-card glass-card-premium d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-primary-accent p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                <i class="bi bi-geo-alt-fill text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 text-white fw-bold">Kyoto Heritage</h6>
+                                <small class="text-secondary text-xs">Japan | 7 Days</small>
+                            </div>
+                        </div>
+                        
+                        <div class="parallax-card price-card glass-card-premium d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-warning p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                <i class="bi bi-wallet2 text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 text-white fw-bold">$1,299</h6>
+                                <small class="text-secondary text-xs">Flexible Installments</small>
+                            </div>
+                        </div>
+                        
+                        <div class="parallax-card weather-card glass-card-premium d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-info p-2 d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                <i class="bi bi-sun-fill text-white"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 text-white fw-bold">22°C Clear</h6>
+                                <small class="text-secondary text-xs">Sunny Tokyo weather</small>
+                            </div>
+                        </div>
+                        
+                        <div class="parallax-card rating-card glass-card-premium d-flex align-items-center gap-2">
+                            <span class="text-warning"><i class="bi bi-star-fill"></i> 4.9</span>
+                            <span class="text-secondary text-xs border-start border-secondary ps-2">1,200+ reviews</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator d-none d-lg-block">
+            <a href="#core-services" class="text-secondary"><i class="bi bi-chevron-down fs-4"></i></a>
+        </div>
+    </header>
+
+    <!-- Core Services Section -->
+    <section class="py-5 my-5 scroll-reveal-section reveal-services-trigger">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-4 text-center text-lg-start">
+                    <span class="text-primary-accent text-uppercase tracking-wider small fw-bold mb-2 d-block">Integrated Travel Portal</span>
+                    <h2 class="display-5 mb-4">One Portal, <span class="text-gradient">Endless Journeys</span></h2>
+                    <p class="text-secondary mb-5">Everything you need to plan, book, and manage premium travel packages across the globe with our modular client system.</p>
+                    <a href="portfolio.html" class="btn btn-primary-custom btn-lg magnetic-btn">Start Planning</a>
+                </div>
+                <div class="col-lg-8">
+                    <div class="row g-4 staggered-services">
+                        <div class="col-md-4">
+                            <div class="glass-card p-4 h-100 service-card-glow border-top-glow-primary">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <i class="bi bi-compass fs-2 text-gradient"></i>
+                                    <div class="fs-4 fw-bold font-monospace text-primary-accent opacity-50">01</div>
+                                </div>
+                                <h4 class="h5 mb-3 text-white">Domestic Escapes</h4>
+                                <p class="text-secondary text-sm mb-4">Explore handpicked domestic destinations ranging from coastal retreats to alpine heights.</p>
+                                <div class="d-flex flex-wrap gap-2 mt-auto pt-3 border-top border-color">
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Goa</span>
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Kerala</span>
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Manali</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-card p-4 h-100 service-card-glow border-top-glow-secondary">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <i class="bi bi-globe fs-2 text-gradient"></i>
+                                    <div class="fs-4 fw-bold font-monospace text-secondary-accent opacity-50">02</div>
+                                </div>
+                                <h4 class="h5 mb-3 text-white">International Tours</h4>
+                                <p class="text-secondary text-sm mb-4">Discover major global cities, exotic islands, and cultural heritage packages with guided ease.</p>
+                                <div class="d-flex flex-wrap gap-2 mt-auto pt-3 border-top border-color">
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Paris</span>
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Tokyo</span>
+                                    <span class="badge rounded-pill bg-secondary-bg text-secondary text-xs px-2.5 py-1.5 border border-color">Bali</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="glass-card p-4 h-100 service-card-glow border-top-glow-luxury">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <i class="bi bi-person-badge fs-2 text-gradient"></i>
+                                    <div class="fs-4 fw-bold font-monospace text-luxury opacity-50">03</div>
+                                </div>
+                                <h4 class="h5 mb-3 text-white">Client Portal</h4>
+                                <p class="text-secondary text-sm mb-4">Keep all your trip details, invoices, payment installments, and travel files in one secure dashboard.</p>
+                                <div class="mt-auto pt-3 border-top border-color">
+                                    <div class="d-flex justify-content-between text-xs text-secondary mb-2">
+                                        <span>Payment Progress</span>
+                                        <span class="text-primary-accent fw-bold">50%</span>
+                                    </div>
+                                    <div class="progress bg-secondary-bg" style="height: 6px; border-radius: 10px; overflow: hidden;">
+                                        <div class="progress-bar bg-primary-accent" style="width: 50%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Portfolio/Showcase Section (Smart Travel Portal) -->
+    <section class="py-5 bg-secondary-bg position-relative overflow-hidden scroll-reveal-section reveal-portfolio-trigger">
+        <!-- Subtle background glow -->
+        <div class="position-absolute" style="width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 107, 53, 0.05) 0%, transparent 70%); top: 10%; left: -200px; pointer-events: none;"></div>
+        
+        <div class="container py-5">
+            <div class="row align-items-center g-5">
+                <!-- Left: Interactive Glassmorphic Portal UI Mockup -->
+                <div class="col-lg-6">
+                    <div class="position-relative p-4 portal-mockup-wrapper">
+                        <!-- Background glow decoration -->
+                        <div class="position-absolute rounded-circle bg-secondary-accent opacity-10" style="width: 320px; height: 320px; bottom: 0; right: 0; filter: blur(40px); z-index: 0;"></div>
+                        
+                        <!-- Main Card: Japan Destination Card -->
+                        <div class="glass-card overflow-hidden position-relative z-index-1 mockup-destination-card" style="box-shadow: 0 20px 45px rgba(0,0,0,0.4);">
+                            <div class="mockup-img-wrap" style="height: 380px; position: relative;">
+                                <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?auto=format&fit=crop&q=80&w=800"
+                                    class="w-100 h-100 object-fit-cover" alt="Tokyo Shrine">
+                                <div class="position-absolute inset-0 bg-gradient-dark opacity-60"></div>
+                                <div class="position-absolute bottom-0 start-0 p-4 w-100 text-start">
+                                    <span class="badge bg-primary-accent text-dark mb-2">OCTOBER 12, 2026</span>
+                                    <h3 class="h4 text-white mb-1">Japan Autumn Escapes</h3>
+                                    <p class="text-secondary text-sm mb-0"><i class="bi bi-geo-alt-fill text-primary-accent me-1.5"></i>Tokyo, Kyoto & Osaka</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Glass Widget 1: Booking Status -->
+                        <div class="glass-card p-3 position-absolute z-index-2 floating-widget-1" 
+                            style="width: 240px; top: -10px; right: -10px; background: rgba(23, 32, 51, 0.85); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08);">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="text-xs text-secondary">Booking ID: #VR-9082</span>
+                                <span class="badge bg-success-soft text-success text-xs px-2 py-0.5" style="background: rgba(16,185,129,0.12);">Active</span>
+                            </div>
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="widget-icon bg-primary-accent text-dark rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                                    <i class="bi bi-airplane-fill"></i>
+                                </div>
+                                <div class="text-start">
+                                    <div class="text-xs text-secondary">Flight Status</div>
+                                    <div class="text-sm fw-bold text-white">JL-006 • Confirmed</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Floating Glass Widget 2: Document Vault Check -->
+                        <div class="glass-card p-3 position-absolute z-index-3 floating-widget-2" 
+                            style="width: 200px; bottom: -20px; left: -10px; background: rgba(23, 32, 51, 0.85); backdrop-filter: blur(12px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08);">
+                            <div class="text-start mb-2">
+                                <span class="text-xs text-secondary">Travel Docs</span>
+                            </div>
+                            <div class="d-flex flex-column gap-2 text-start">
+                                <div class="d-flex align-items-center justify-content-between text-xs">
+                                    <span class="text-secondary"><i class="bi bi-file-earmark-check-fill text-success me-1.5"></i>Passport</span>
+                                    <span class="text-success fw-bold">Verified</span>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-between text-xs">
+                                    <span class="text-secondary"><i class="bi bi-file-earmark-arrow-up-fill text-primary-accent me-1.5"></i>Visa Form</span>
+                                    <span class="text-primary-accent fw-bold">Pending</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+ 
+                <!-- Right: Content and Asymmetrical Grid Blocks -->
+                <div class="col-lg-6">
+                    <div class="text-center text-lg-start">
+                        <span class="text-primary-accent text-uppercase tracking-wider small fw-bold mb-2 d-block">Smart Travel Portal</span>
+                        <h2 class="section-title mb-4">Travel Made <span class="text-gradient">Simple & Vibrant</span></h2>
+                        <p class="text-secondary mb-5">Track and manage your holiday bookings, itineraries, payment installments, and files within our unified portal.</p>
+                    </div>
+                    
+                    <div class="row g-4 mb-5 text-start">
+                        <!-- Card 1: Wide Card (Payments) -->
+                        <div class="col-12">
+                            <div class="glass-card p-4 hover-effect border-start border-3 border-primary-accent bg-card-glow">
+                                <div class="d-flex align-items-start gap-4">
+                                    <div class="fs-2 text-primary-accent mt-1"><i class="bi bi-credit-card-fill"></i></div>
+                                    <div class="flex-grow-1">
+                                        <h4 class="h5 text-white mb-2">Track Installs & Payments</h4>
+                                        <p class="text-secondary text-sm mb-0">View your package pricing breakdown, check due installments, and pay securely using our client portal.</p>
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center mt-3 pt-3 border-top border-color text-xs text-secondary gap-2">
+                                            <div class="d-flex align-items-center gap-1.5"><i class="bi bi-check-circle-fill text-success"></i> Deposit Paid</div>
+                                            <div class="d-flex align-items-center gap-1.5"><i class="bi bi-check-circle-fill text-success"></i> Installment 1</div>
+                                            <div class="d-flex align-items-center gap-1.5"><i class="bi bi-clock-history text-primary-accent"></i> Installment 2 (Due Sep 01)</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 2: Half Width (Itinerary) -->
+                        <div class="col-md-6">
+                            <div class="glass-card p-4 hover-effect border-start border-3 border-secondary-accent h-100">
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="fs-2 text-secondary-accent"><i class="bi bi-map-fill"></i></div>
+                                    <div>
+                                        <h4 class="h5 text-white mb-2">Interactive Itineraries</h4>
+                                        <p class="text-secondary text-sm mb-0">Get detailed day-by-day itineraries complete with flight and hotel details, downloadable offline.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Card 3: Half Width (Vault) -->
+                        <div class="col-md-6">
+                            <div class="glass-card p-4 hover-effect border-start border-3 border-luxury h-100">
+                                <div class="d-flex flex-column gap-3">
+                                    <div class="fs-2 text-luxury"><i class="bi bi-file-earmark-lock-fill"></i></div>
+                                    <div>
+                                        <h4 class="h5 text-white mb-2">Secure Document Vault</h4>
+                                        <p class="text-secondary text-sm mb-0">Upload passports, visas, and insurance directly to your booking logs for fast verification.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="d-flex justify-content-center justify-content-lg-start gap-3">
+                        <a href="portfolio.html" class="btn btn-outline-custom">Browse Destinations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By / Stats Section -->
+    <section class="py-5 position-relative overflow-hidden scroll-reveal-section reveal-stats-trigger">
+        <!-- Glow accents -->
+        <div class="position-absolute" style="width: 500px; height: 500px; background: radial-gradient(circle, rgba(255, 107, 53, 0.03) 0%, transparent 70%); bottom: -250px; right: 10%; pointer-events: none;"></div>
+
+        <div class="container py-5 text-center">
+            <div class="max-w-700 mx-auto mb-5">
+                <span class="text-primary-accent text-uppercase tracking-wider small fw-bold mb-2 d-block">Global Footprint</span>
+                <h2 class="section-title mb-4">Trusted by <span class="text-gradient">10,000+ Happy Travelers</span></h2>
+                <p class="text-secondary lead">We offer handpicked tours, premium booking management, and around-the-clock support to tourists across the globe.</p>
+            </div>
+            
+            <div class="row g-4 justify-content-center align-items-center mt-2">
+                <!-- Stat Card 1 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="glass-card p-4 text-center hover-effect h-100" style="border-top: 4px solid var(--primary-accent);">
+                        <div class="fs-1 text-primary-accent mb-3"><i class="bi bi-emoji-smile-fill"></i></div>
+                        <h3 class="display-6 fw-bold text-white mb-2 font-monospace">15k+</h3>
+                        <p class="text-secondary small mb-0 font-monospace text-uppercase tracking-wider">Trips Completed</p>
+                    </div>
+                </div>
+
+                <!-- Stat Card 2 (Highlighted) -->
+                <div class="col-md-4 col-lg-4">
+                    <div class="glass-card p-5 text-center hover-effect h-100 position-relative shadow-lg" 
+                        style="border: 2px solid var(--primary-accent); transform: scale(1.05); background: rgba(255, 107, 53, 0.03);">
+                        <div class="position-absolute top-0 start-50 translate-middle badge bg-primary-accent text-dark rounded-pill px-3 py-2 text-xs">VIBRANT</div>
+                        <div class="fs-1 text-primary-accent mb-3"><i class="bi bi-star-fill"></i></div>
+                        <h3 class="display-5 fw-bold text-white mb-2 font-monospace">98%</h3>
+                        <p class="text-secondary small mb-0 font-monospace text-uppercase tracking-wider">Customer Satisfaction</p>
+                    </div>
+                </div>
+
+                <!-- Stat Card 3 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="glass-card p-4 text-center hover-effect h-100" style="border-top: 4px solid var(--primary-accent);">
+                        <div class="fs-1 text-primary-accent mb-3"><i class="bi bi-shield-fill-check"></i></div>
+                        <h3 class="display-6 fw-bold text-white mb-2 font-monospace">24/7</h3>
+                        <p class="text-secondary small mb-0 font-monospace text-uppercase tracking-wider">On-Trip Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-5 bg-secondary-bg scroll-reveal-section reveal-steps-trigger">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 mb-3">Your Journey in <span class="text-gradient">3 Simple Steps</span></h2>
+                <p class="text-secondary max-w-600 mx-auto">Book your dream package, manage documents, and prepare for your adventure.</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card p-5 h-100 text-center">
+                        <div class="mb-4 mx-auto d-flex align-items-center justify-content-center fw-bold rounded-circle shadow"
+                            style="width: 70px; height: 70px; font-size: 1.5rem; background-color: var(--primary-accent); color: #090E1A;">1</div>
+                        <h4 class="h5 mb-3">Pick a Package</h4>
+                        <p class="text-secondary mb-0">Browse our domestic and international packages sorted by destination and duration to find your perfect trip.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-5 h-100 text-center">
+                        <div class="mb-4 mx-auto d-flex align-items-center justify-content-center fw-bold rounded-circle shadow"
+                            style="width: 70px; height: 70px; font-size: 1.5rem; background-color: var(--primary-accent); color: #090E1A;">2</div>
+                        <h4 class="h5 mb-3">Customize & Upload</h4>
+                        <p class="text-secondary mb-0">Customize your travel details day-by-day and upload necessary travel documents to our secure client vault.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="glass-card p-5 h-100 text-center">
+                        <div class="mb-4 mx-auto d-flex align-items-center justify-content-center fw-bold rounded-circle shadow"
+                            style="width: 70px; height: 70px; font-size: 1.5rem; background-color: var(--primary-accent); color: #090E1A;">3</div>
+                        <h4 class="h5 mb-3">Roam the World</h4>
+                        <p class="text-secondary mb-0">Track payment installments, download offline-ready itineraries, and embark on a stress-free, memorable tour.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Preview Section -->
+    <section class="py-5 scroll-reveal-section reveal-pricing-trigger">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h2 class="display-5 mb-3">Packages That <span class="text-gradient">Fit Your Dream</span></h2>
+                <p class="text-secondary max-w-600 mx-auto">Explore curated travel tiers with complete booking support and portal access.</p>
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card p-5 h-100 d-flex flex-column">
+                        <div style="height: 40px;" class="mb-4"></div> <!-- Badge Spacer -->
+                        <h4 class="h5 text-white mb-4 text-center">Explorer Pass</h4>
+                        <div class="display-4 fw-bold mb-4 text-white text-center" style="min-height: 72px; display: flex; align-items: flex-end; justify-content: center;">$499 <span
+                                class="fs-6 text-secondary fw-normal">/ trip</span></div>
+                        <ul class="list-unstyled mb-5 text-secondary">
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Curated Domestic Package</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> 3-Star Hotel Accommodation</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Basic Client Dashboard</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="register.html" class="btn btn-outline-custom w-100">Get Started</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card p-5 h-100 border-primary-accent d-flex flex-column"
+                        style="box-shadow: 0 0 40px rgba(255, 107, 53, 0.1);">
+                        <div class="text-center mb-4" style="height: 40px;">
+                            <div class="badge bg-primary-accent text-dark px-3 py-2">MOST POPULAR</div>
+                        </div>
+                        <h4 class="h5 text-white mb-4 text-center">Globetrotter Pass</h4>
+                        <div class="display-4 fw-bold mb-4 text-white text-center" style="min-height: 72px; display: flex; align-items: flex-end; justify-content: center;">$1,299 <span
+                                class="fs-6 text-secondary fw-normal">/ trip</span></div>
+                        <ul class="list-unstyled mb-5 text-secondary">
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Domestic & International Tours</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> 4-Star Hotel Accommodation</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Full Itinerary Customization</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Priority Document Verification</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="register.html" class="btn btn-primary-custom w-100">Book Now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="glass-card p-5 h-100 d-flex flex-column">
+                        <div style="height: 40px;" class="mb-4"></div> <!-- Badge Spacer -->
+                        <h4 class="h5 text-white mb-4 text-center">Luxury Escape</h4>
+                        <div class="display-4 fw-bold mb-4 text-white text-center" style="min-height: 72px; display: flex; align-items: flex-end; justify-content: center;">$2,999 <span
+                                class="fs-6 text-secondary fw-normal">/ trip</span></div>
+                        <ul class="list-unstyled mb-5 text-secondary">
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> 5-Star Luxury Resort Stay</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Dedicated 24/7 Concierge</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> VIP Airport Transfers</li>
+                            <li class="mb-3 d-flex align-items-center gap-2"><i
+                                    class="bi bi-check2 text-primary-accent fs-5"></i> Express Visa Processing Support</li>
+                        </ul>
+                        <div class="mt-auto">
+                            <a href="contact.html" class="btn btn-outline-custom w-100">Contact Agency</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5 mt-5 border-top border-color">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-4">
+                    <a class="navbar-brand d-flex align-items-center mb-4" href="#">
+                        <img src="assets/images/logo.svg" alt="VoyageRise Logo" height="30" class="me-2">
+                        <span class="fw-bold text-white fs-4">Voyage<span class="text-gradient">Rise</span></span>
+                    </a>
+                    <p class="text-secondary">A premium travel agency providing curated domestic and international packages with a state-of-the-art client portal for managing itineraries, bookings, and travel documents.</p>
+                    <div class="d-flex gap-3 fs-4 mt-4 social-links">
+                        <a href="#" class="text-secondary"><i class="bi bi-linkedin"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-twitter-x"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-secondary"><i class="bi bi-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Destinations</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Domestic Escapes</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">International Tours</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-2">
+                    <h5 class="mb-4">Main Links</h5>
+                    <ul class="list-unstyled text-secondary">
+                        <li class="mb-2"><a href="index.html" class="text-decoration-none text-secondary">Home</a></li>
+                        <li class="mb-2"><a href="services.html" class="text-decoration-none text-secondary">Services</a></li>
+                        <li class="mb-2"><a href="portfolio.html" class="text-decoration-none text-secondary">Tour Packages</a></li>
+                        <li class="mb-2"><a href="pricing.html" class="text-decoration-none text-secondary">Pricing</a></li>
+                        <li class="mb-2"><a href="contact.html" class="text-decoration-none text-secondary">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="mb-4">Stay Updated</h5>
+                    <div class="glass-card p-2 d-flex">
+                        <input type="email" class="form-control bg-transparent border-0 text-white shadow-none"
+                            placeholder="Email Address">
+                        <button class="btn btn-primary-custom ms-2">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5 pt-5 text-secondary border-top border-color">
+                <p>&copy; 2026 VoyageRise Travel Agency. All Rights Reserved. Explore the World.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+    <!-- Custom Hero & Scroll Reveal Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Counter Animation
+            const triggerCounters = (parent) => {
+                const counters = parent.querySelectorAll('[data-target]');
+                counters.forEach(counter => {
+                    if (counter.classList.contains('animated-started')) return;
+                    counter.classList.add('animated-started');
+                    
+                    const target = +counter.getAttribute('data-target');
+                    const decimals = +counter.getAttribute('data-decimals') || 0;
+                    let current = 0;
+                    const duration = 2000; // 2 seconds
+                    const stepTime = 20;
+                    const steps = duration / stepTime;
+                    const increment = target / steps;
+                    
+                    const updateCounter = () => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = decimals ? (target/10).toFixed(decimals) : target.toLocaleString() + (target === 15000 ? '+' : '');
+                        } else {
+                            counter.textContent = decimals ? (current/10).toFixed(decimals) : Math.floor(current).toLocaleString();
+                            setTimeout(updateCounter, stepTime);
+                        }
+                    };
+                    updateCounter();
+                });
+            };
+
+            // Trigger hero stats immediately
+            const heroStatsSection = document.querySelector('.home-hero');
+            if (heroStatsSection) {
+                triggerCounters(heroStatsSection);
+            }
+
+            // Scroll Reveal Intersection Observer
+            const revealSections = document.querySelectorAll('.scroll-reveal-section');
+            const observerOptions = {
+                root: null,
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                        
+                        // Trigger stats counter animation if this section contains any counters
+                        if (entry.target.querySelector('[data-target]')) {
+                            triggerCounters(entry.target);
+                        }
+                        
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            revealSections.forEach(section => {
+                revealObserver.observe(section);
+            });
+
+            // Parallax mouse hover effect
+            const container = document.querySelector('.hero-img-container');
+            const cards = document.querySelectorAll('.parallax-card');
+            if (container) {
+                container.addEventListener('mousemove', (e) => {
+                    const rect = container.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width/2;
+                    const y = e.clientY - rect.top - rect.height/2;
+                    
+                    cards.forEach((card, idx) => {
+                        const factor = (idx + 1) * 0.05;
+                        card.style.transform = `translate3d(${x * factor}px, ${y * factor}px, 0)`;
+                    });
+                });
+                container.addEventListener('mouseleave', () => {
+                    cards.forEach(card => {
+                        card.style.transform = 'translate3d(0, 0, 0)';
+                    });
+                });
+            }
+
+            // Magnetic Buttons
+            const magneticBtns = document.querySelectorAll('.magnetic-btn');
+            magneticBtns.forEach(btn => {
+                btn.addEventListener('mousemove', (e) => {
+                    const rect = btn.getBoundingClientRect();
+                    const x = e.clientX - rect.left - rect.width/2;
+                    const y = e.clientY - rect.top - rect.height/2;
+                    btn.style.transform = `translate3d(${x * 0.3}px, ${y * 0.3}px, 0)`;
+                });
+                btn.addEventListener('mouseleave', () => {
+                    btn.style.transform = 'translate3d(0, 0, 0)';
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
