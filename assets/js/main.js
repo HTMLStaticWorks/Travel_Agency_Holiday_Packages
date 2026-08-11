@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
         // Close sidebar on mobile after selection
-        if (window.innerWidth < 992 && sidebar.classList.contains('active')) {
+        if (window.innerWidth <= 1024 && sidebar && sidebar.classList.contains('active')) {
             sidebar.classList.remove('active');
         }
     };

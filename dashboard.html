@@ -7,11 +7,35 @@
     <title>Dashboard | VoyageRise Travel Agency</title>
     <link class="brand-favicon" rel="icon" type="image/png" href="assets/images/logo.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="assets/css/dark-mode.css">
     <link rel="stylesheet" href="assets/css/rtl.css">
     <style>
+        /* Itinerary Cards responsive styling */
+        @media (max-width: 575.98px) {
+            .itinerary-card {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                gap: 12px !important;
+            }
+            .itinerary-card > .d-flex {
+                flex-direction: column !important;
+                align-items: flex-start !important;
+                width: 100% !important;
+            }
+            .itinerary-card .flex-shrink-0 {
+                margin-right: 0 !important;
+                margin-left: 0 !important;
+                margin-bottom: 10px !important;
+            }
+            .itinerary-card .badge {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
+                align-self: flex-start !important;
+            }
+        }
+
         /* Responsive adjustments */
         #overview-section .overview-metric-card {
             display: flex;
@@ -74,6 +98,104 @@
         body:not(.light-theme) .text-secondary {
             color: #b8c0d4 !important;
         }
+
+        /* ── Toggle Switch: dark bg + orange thumb ── */
+        #confirmItineraryToggle.form-check-input {
+            background-color: #0a0f1e;
+            border-color: #2d3748;
+            cursor: pointer;
+        }
+        #confirmItineraryToggle.form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+            border-color: var(--primary-accent);
+        }
+        #confirmItineraryToggle.form-check-input:checked {
+            background-color: var(--primary-accent);
+            border-color: var(--primary-accent);
+        }
+        /* The sliding thumb circle */
+        #confirmItineraryToggle.form-check-input::before,
+        #confirmItineraryToggle.form-check-input:not(:checked) {
+            --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23FF6B35'/%3e%3c/svg%3e");
+        }
+        #confirmItineraryToggle.form-check-input:checked {
+            --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23ffffff'/%3e%3c/svg%3e");
+        }
+
+        /* ── Dropdown arrow: light chevron for dark dashboard ── */
+        body:not(.light-theme) .form-select {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23CBD5E1' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e") !important;
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px 12px;
+        }
+
+        /* ── Custom File Upload Zone ── */
+        .file-upload-zone {
+            position: relative;
+            border: 2px dashed rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03);
+        }
+        .file-upload-zone:hover,
+        .file-upload-zone.drag-over {
+            border-color: var(--primary-accent);
+            background: rgba(255, 107, 53, 0.06);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.1);
+        }
+        .file-upload-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .file-upload-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(255, 107, 53, 0.1);
+            border: 1px solid rgba(255, 107, 53, 0.25);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--primary-accent);
+            margin-bottom: 12px;
+            transition: transform 0.3s ease;
+        }
+        .file-upload-zone:hover .file-upload-icon {
+            transform: scale(1.1) rotate(-5deg);
+        }
+        .file-upload-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e2e8f0;
+            margin-bottom: 4px;
+        }
+        .file-upload-sub {
+            font-size: 0.78rem;
+            color: #64748B;
+        }
+        .file-upload-name {
+            margin-top: 10px;
+            font-size: 0.8rem;
+            color: var(--primary-accent);
+            font-weight: 600;
+            display: none;
+        }
+        body.light-theme .file-upload-zone {
+            border-color: rgba(0,0,0,0.12);
+            background: rgba(0,0,0,0.02);
+        }
+        body.light-theme .file-upload-title { color: #1e293b; }
+        body.light-theme .file-upload-sub   { color: #94A3B8; }
     </style>
 </head>
 
@@ -419,7 +541,7 @@
                         <h4 class="h5 mb-4">Day-by-Day Itinerary</h4>
                         <p class="text-secondary text-sm mb-4">Track daily sightseeing tours, transfers, and activities confirmed for your vacation.</p>
                         <div class="d-flex flex-column gap-3">
-                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color itinerary-card">
                                 <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
                                     <div class="bg-primary-accent rounded p-2 text-dark me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
                                     <div class="flex-grow-1" style="min-width: 0;">
@@ -429,7 +551,7 @@
                                 </div>
                                 <span class="badge bg-success flex-shrink-0 ms-3">Confirmed</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color itinerary-card">
                                 <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
                                     <div class="bg-secondary rounded p-2 me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
                                     <div class="flex-grow-1" style="min-width: 0;">
@@ -439,7 +561,7 @@
                                 </div>
                                 <span class="badge bg-warning text-dark flex-shrink-0 ms-3">Confirmed</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color">
+                            <div class="d-flex align-items-center justify-content-between p-3 bg-secondary-bg rounded border border-color itinerary-card">
                                 <div class="d-flex align-items-center flex-grow-1" style="min-width: 0;">
                                     <div class="bg-secondary rounded p-2 me-3 flex-shrink-0"><i class="bi bi-calendar"></i></div>
                                     <div class="flex-grow-1" style="min-width: 0;">
@@ -473,7 +595,21 @@
                             </div>
                             <div class="mb-4">
                                 <label class="form-label text-secondary text-sm">Upload File (PDF, JPG, PNG)</label>
-                                <input type="file" class="form-control bg-transparent border-color text-white shadow-none p-3">
+                                <div class="file-upload-zone" id="fileUploadZone">
+                                    <input type="file" id="docFileInput" accept=".pdf,.jpg,.jpeg,.png"
+                                        onchange="
+                                            const name = this.files[0]?.name;
+                                            const nameEl = document.getElementById('fileUploadFileName');
+                                            if (name) { nameEl.textContent = '📎 ' + name; nameEl.style.display='block'; }
+                                            else { nameEl.style.display='none'; }
+                                        ">
+                                    <div class="file-upload-icon">
+                                        <i class="bi bi-paperclip"></i>
+                                    </div>
+                                    <div class="file-upload-title">Click to attach or drag & drop</div>
+                                    <div class="file-upload-sub">Supports PDF, JPG, PNG</div>
+                                    <div class="file-upload-name" id="fileUploadFileName"></div>
+                                </div>
                             </div>
                             <button type="submit" class="btn btn-primary-custom w-100 py-3">Submit Document</button>
                         </form>

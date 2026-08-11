@@ -849,6 +849,20 @@ body.light-theme section:nth-of-type(even) {
         padding: 24px !important;
     }
 
+    /* RTL Overrides for 1024px Viewport */
+    [dir="rtl"] .sidebar {
+        transform: translateX(100%) !important;
+    }
+
+    [dir="rtl"] .sidebar.active {
+        transform: translateX(0) !important;
+    }
+
+    [dir="rtl"] .main-content {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+    }
+
     .main-content header {
         flex-wrap: nowrap;
         align-items: center !important;
@@ -1344,5 +1358,37 @@ body:not(.light-theme) #pricingFaqAccordion .accordion-button::after {
 .bg-card-glow {
     background: linear-gradient(135deg, rgba(23, 32, 51, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
 }
+
+/* Glass card premium secondary text visibility fix */
+.glass-card-premium .text-secondary {
+    color: var(--text-secondary) !important;
+}
+
+/* Hero section badge dark mode visibility fix */
+body:not(.light-theme) .home-hero .badge {
+    background: rgba(255, 107, 53, 0.08) !important;
+    border-color: rgba(255, 107, 53, 0.25) !important;
+    color: var(--primary-accent) !important;
+}
+
+/* Custom Checkbox Styling */
+.form-check-input {
+    background-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.form-check-input:checked {
+    background-color: var(--primary-accent) !important;
+    border-color: var(--primary-accent) !important;
+}
+
+.form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25) !important;
+    border-color: var(--primary-accent) !important;
+}
+
+
 
 

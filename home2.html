@@ -11,7 +11,7 @@
 
     <!-- Bootstrap 5 CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
@@ -79,6 +79,20 @@
             }
 
             body.home2-page #pricing-plans .row.align-items-stretch > [class*="col-"] > .glass-card {
+                width: 100%;
+            }
+
+            body.home2-page #pricing-plans .glass-card {
+                text-align: center;
+                align-items: center;
+            }
+
+            body.home2-page #pricing-plans .glass-card ul {
+                text-align: left;
+                width: fit-content;
+            }
+
+            body.home2-page #pricing-plans .glass-card .mt-auto {
                 width: 100%;
             }
         }
@@ -255,6 +269,29 @@
         @keyframes dealRevealRight {
             to { opacity: 1; transform: translateX(0); }
         }
+
+        /* Demo QR Container Theme Adjustments */
+        .demo-qr-container {
+            background-color: var(--primary-bg) !important;
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        .demo-qr-container i {
+            color: var(--text-primary) !important;
+        }
+        .demo-qr-container p {
+            color: var(--text-secondary) !important;
+        }
+        body.light-theme .demo-qr-container {
+            background-color: #ffffff !important;
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        body.light-theme .demo-qr-container i {
+            color: #0f172a !important;
+        }
+        body.light-theme .demo-qr-container p {
+            color: #64748b !important;
+        }
     </style>
 </head>
 
@@ -360,7 +397,7 @@
                         <div class="flip-card-inner glow-border">
                             <!-- Card Front -->
                             <div class="flip-card-front d-flex flex-column text-start">
-                                <img src="https://images.unsplash.com/photo-1542640244-7e672d6cef21?auto=format&fit=crop&q=80&w=400" 
+                                <img src="https://www.emperortraveline.com/wp-content/uploads/2019/09/Travel-Agency-3.png" 
                                      class="w-100 img-fluid" style="height: 240px; object-fit: cover;" alt="Kyoto temple cherry blossoms">
                                 <div class="p-4 d-flex flex-column flex-grow-1">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -407,17 +444,17 @@
             <div class="row g-4">
                 <div class="col-lg-6">
                     <div class="glass-card p-5 h-100 border-gradient">
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="feature-icon bg-primary-accent rounded-circle p-3 me-4">
+                        <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start text-center text-sm-start mb-4">
+                            <div class="feature-icon bg-primary-accent rounded-circle p-3 me-0 me-sm-4 mb-3 mb-sm-0">
                                 <i class="bi bi-calendar-check text-white fs-4"></i>
                             </div>
                             <div>
                                 <h3 class="h4 mb-3">Smart Booking Management</h3>
                                 <p class="text-secondary mb-3">Track details of your flight, resort lodging, and local transit bookings inside your unified booking log.</p>
-                                <ul class="list-unstyled text-secondary small">
-                                    <li class="mb-2"><i class="bi bi-check-circle text-primary-accent me-2"></i>Real-Time Updates</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-primary-accent me-2"></i>Auto-Sync Check-In Alerts</li>
-                                    <li class="mb-2"><i class="bi bi-check-circle text-primary-accent me-2"></i>Secure Online Reservations</li>
+                                <ul class="list-unstyled text-secondary small d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                    <li class="mb-0"><i class="bi bi-check-circle text-primary-accent me-2"></i>Real-Time Updates</li>
+                                    <li class="mb-0"><i class="bi bi-check-circle text-primary-accent me-2"></i>Auto-Sync Check-In Alerts</li>
+                                    <li class="mb-0"><i class="bi bi-check-circle text-primary-accent me-2"></i>Secure Online Reservations</li>
                                 </ul>
                             </div>
                         </div>
@@ -425,8 +462,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="glass-card p-5 h-100 border-gradient">
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="feature-icon bg-success rounded-circle p-3 me-4">
+                        <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start text-center text-sm-start mb-4">
+                            <div class="feature-icon bg-success rounded-circle p-3 me-0 me-sm-4 mb-3 mb-sm-0">
                                 <i class="bi bi-file-earmark-lock-fill text-white fs-4"></i>
                             </div>
                             <div>
@@ -443,8 +480,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="glass-card p-5 h-100 border-gradient">
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="feature-icon bg-warning rounded-circle p-3 me-4">
+                        <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start text-center text-sm-start mb-4">
+                            <div class="feature-icon bg-warning rounded-circle p-3 me-0 me-sm-4 mb-3 mb-sm-0">
                                 <i class="bi bi-wallet2 text-white fs-4"></i>
                             </div>
                             <div>
@@ -461,8 +498,8 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="glass-card p-5 h-100 border-gradient">
-                        <div class="d-flex align-items-start mb-4">
-                            <div class="feature-icon bg-info rounded-circle p-3 me-4">
+                        <div class="d-flex flex-column flex-sm-row align-items-center align-items-sm-start text-center text-sm-start mb-4">
+                            <div class="feature-icon bg-info rounded-circle p-3 me-0 me-sm-4 mb-3 mb-sm-0">
                                 <i class="bi bi-download text-white fs-4"></i>
                             </div>
                             <div>
@@ -471,7 +508,7 @@
                                 <ul class="list-unstyled text-secondary small">
                                     <li class="mb-2"><i class="bi bi-check-circle text-info me-2"></i>Rich PDF Format Export</li>
                                     <li class="mb-2"><i class="bi bi-check-circle text-info me-2"></i>Includes Emergency Support Contacts</li>
-                                    <li class="bi bi-check-circle text-info me-2">Step-by-Step Travel Guides</li>
+                                    <li class="mb-2"><i class="bi bi-check-circle text-info me-2"></i>Step-by-Step Travel Guides</li>
                                 </ul>
                             </div>
                         </div>
@@ -693,10 +730,10 @@
                 <div class="col-lg-6">
                     <div class="glass-card p-5">
                         <div class="text-center mb-4">
-                            <div class="demo-qr-container p-4 bg-white rounded-4 d-inline-block">
+                            <div class="demo-qr-container p-4 rounded-4 d-inline-block">
                                 <div class="qr-placeholder text-center">
-                                    <i class="bi bi-grid-fill display-1 text-dark mb-3 d-block"></i>
-                                    <p class="text-muted small">VoyageRise Client Dashboard</p>
+                                    <i class="bi bi-grid-fill display-1 mb-3 d-block"></i>
+                                    <p class="small mb-0">VoyageRise Client Dashboard</p>
                                 </div>
                             </div>
                         </div>
