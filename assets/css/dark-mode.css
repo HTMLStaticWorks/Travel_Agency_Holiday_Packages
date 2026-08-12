@@ -168,7 +168,8 @@ body.light-theme .border-color {
 
 /* Navbar Toggler Fix */
 body.light-theme .navbar-toggler,
-body.light-theme .navbar-toggler i {
+body.light-theme .navbar-toggler i,
+body.light-theme .navbar-toggler i.text-white {
     color: #0F172A !important;
     opacity: 1 !important;
     box-shadow: none !important;
