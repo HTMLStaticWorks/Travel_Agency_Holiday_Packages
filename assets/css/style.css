@@ -1367,9 +1367,39 @@ body:not(.light-theme) #pricingFaqAccordion .accordion-button::after {
     background: linear-gradient(135deg, rgba(23, 32, 51, 0.7) 0%, rgba(15, 23, 42, 0.8) 100%) !important;
 }
 
-/* Glass card premium secondary text visibility fix */
+/* Glass card premium visibility rules for dark and light modes */
+.glass-card-premium {
+    background: rgba(15, 23, 42, 0.88) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.18) !important;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.4) !important;
+    color: #ffffff !important;
+}
+.glass-card-premium .text-white,
+.glass-card-premium h6,
+.glass-card-premium h5,
+.glass-card-premium span.fw-bold {
+    color: #ffffff !important;
+}
 .glass-card-premium .text-secondary {
-    color: var(--text-secondary) !important;
+    color: #cbd5e1 !important;
+}
+body.light-theme .glass-card-premium {
+    background: rgba(255, 255, 255, 0.9) !important;
+    border: 1px solid rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.12) !important;
+    color: #0f172a !important;
+}
+body.light-theme .glass-card-premium .text-white,
+body.light-theme .glass-card-premium h6,
+body.light-theme .glass-card-premium h5,
+body.light-theme .glass-card-premium span.fw-bold {
+    color: #0f172a !important;
+}
+body.light-theme .glass-card-premium .text-secondary {
+    color: #475569 !important;
 }
 
 /* Hero section badge dark mode visibility fix */
