@@ -831,6 +831,14 @@ body.light-theme section:nth-of-type(even) {
     font-size: clamp(1.3rem, 1.8vw, 1.65rem) !important;
 }
 
+/* Remove margin-top: auto gap above Account Settings on mobile, tablet & 1024px screens */
+@media (max-width: 1024px) {
+    .sidebar-nav hr {
+        margin-top: 1rem !important;
+        margin-bottom: 1rem !important;
+    }
+}
+
 @media (width: 1024px) {
     .sidebar {
         transform: translateX(-100%) !important;
