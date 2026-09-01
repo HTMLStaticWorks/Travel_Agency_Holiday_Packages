@@ -237,18 +237,6 @@ body.light-theme .floating-widget-1 .text-white,
 body.light-theme .floating-widget-1 .text-secondary,
 body.light-theme .floating-widget-2 .text-white,
 body.light-theme .floating-widget-2 .text-secondary,
-body.light-theme .flip-card-back .text-white,
-body.light-theme .flip-card-back h1,
-body.light-theme .flip-card-back h2,
-body.light-theme .flip-card-back h3,
-body.light-theme .flip-card-back h4,
-body.light-theme .flip-card-back h5,
-body.light-theme .flip-card-back h6,
-body.light-theme .flip-card-back p,
-body.light-theme .flip-card-back small,
-body.light-theme .flip-card-back span,
-body.light-theme .rounded-circle i,
-body.light-theme .rounded-circle .bi,
 body.light-theme .btn-primary-custom,
 body.light-theme .btn-primary-custom i,
 body.light-theme .btn-primary-custom span,
@@ -260,9 +248,19 @@ body.light-theme .offer-pulse-badge * {
     color: #FFFFFF !important;
 }
 
-body.light-theme .mockup-destination-card .text-secondary,
-body.light-theme .flip-card-back .text-secondary {
-    color: #CBD5E1 !important;
+body.light-theme .flip-card-front h4,
+body.light-theme .flip-card-front .h4,
+body.light-theme .flip-card-front .text-white,
+body.light-theme .flip-card-back h4,
+body.light-theme .flip-card-back .h4,
+body.light-theme .flip-card-back .text-white {
+    color: #0f172a !important;
+}
+
+body.light-theme .flip-card-front .text-secondary,
+body.light-theme .flip-card-back .text-secondary,
+body.light-theme .flip-card-back li {
+    color: #475569 !important;
 }
 
 body.light-theme .countdown-lbl {
@@ -288,6 +286,33 @@ body.light-theme .form-check-input:checked {
 body.light-theme .form-check-input:focus {
     box-shadow: 0 0 0 0.25rem rgba(255, 107, 53, 0.25) !important;
     border-color: var(--primary-accent) !important;
+}
+
+/* Featured Guide High Contrast Subtext & Theme Overrides */
+#featured-guide .featured-guide-desc,
+#featured-guide p.text-secondary {
+    color: #cbd5e1;
+}
+
+body.light-theme #featured-guide {
+    background: #ffffff !important;
+    border: 1px solid rgba(0, 0, 0, 0.1) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05) !important;
+}
+
+body.light-theme #featured-guide h2,
+body.light-theme #featured-guide .text-white {
+    color: #0f172a !important;
+}
+
+body.light-theme #featured-guide .featured-guide-desc,
+body.light-theme #featured-guide p.text-secondary {
+    color: #334155 !important;
+}
+
+body.light-theme #featured-guide .bg-secondary-bg {
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
 }
 
 
